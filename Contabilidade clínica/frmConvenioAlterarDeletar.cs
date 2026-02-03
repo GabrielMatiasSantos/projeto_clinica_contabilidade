@@ -77,11 +77,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Convenio convenio = new Convenio(Convert.ToInt32(txtId.Text), txtConvenio.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios WHERE convenio_nome = @convenio AND NOT convenio_id = @id;", conexao);
 
@@ -121,6 +123,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }                   
             }
             
@@ -132,11 +141,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Convenio convenio = new Convenio(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios_valores WHERE convenio = @id;", conexao);
 
@@ -173,6 +184,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }

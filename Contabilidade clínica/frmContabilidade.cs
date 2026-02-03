@@ -35,529 +35,722 @@ namespace Contabilidade_clínica
        
         public void TabelaMembros()  
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_membros ORDER BY membro_nome", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_membros ORDER BY membro_nome", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvMembros.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvMembros.Columns[0].Visible = false;
+                dgvMembros.DataSource = tabela;
 
-            dgvMembros.Columns[1].HeaderText = "Nome";
-            dgvMembros.Columns[2].HeaderText = "Função";            
-            dgvMembros.Columns[3].HeaderText = "Vínculo";
-            dgvMembros.Columns[4].HeaderText = "Situação";
+                dgvMembros.Columns[0].Visible = false;
 
-            dgvMembros.Columns[1].Width = 180;
-            dgvMembros.Columns[2].Width = 100;            
-            dgvMembros.Columns[3].Width = 80;
-            dgvMembros.Columns[4].Width = 75;
+                dgvMembros.Columns[1].HeaderText = "Nome";
+                dgvMembros.Columns[2].HeaderText = "Função";
+                dgvMembros.Columns[3].HeaderText = "Vínculo";
+                dgvMembros.Columns[4].HeaderText = "Situação";
 
-            dgvMembros.Columns[1].DisplayIndex = 0;
-            dgvMembros.Columns[2].DisplayIndex = 1;
-            dgvMembros.Columns[3].DisplayIndex = 2;
-            dgvMembros.Columns[4].DisplayIndex = 3;
+                dgvMembros.Columns[1].Width = 180;
+                dgvMembros.Columns[2].Width = 100;
+                dgvMembros.Columns[3].Width = 80;
+                dgvMembros.Columns[4].Width = 75;
+
+                dgvMembros.Columns[1].DisplayIndex = 0;
+                dgvMembros.Columns[2].DisplayIndex = 1;
+                dgvMembros.Columns[3].DisplayIndex = 2;
+                dgvMembros.Columns[4].DisplayIndex = 3;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
+           
         }
 
         public void TabelaPagamentosBruto()  
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT pagamento_bruto_id, membro_nome, pagamento_bruto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT pagamento_bruto_id, membro_nome, pagamento_bruto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvPagamentosBruto.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvPagamentosBruto.Columns[0].Visible = false;
+                dgvPagamentosBruto.DataSource = tabela;
 
-            dgvPagamentosBruto.Columns[1].HeaderText = "Nome";
-            dgvPagamentosBruto.Columns[2].HeaderText = "Valor (R$)";
-            dgvPagamentosBruto.Columns[3].HeaderText = "Mês";
-            dgvPagamentosBruto.Columns[4].HeaderText = "Ano";
+                dgvPagamentosBruto.Columns[0].Visible = false;
 
-            dgvPagamentosBruto.Columns[1].Width = 180;
-            dgvPagamentosBruto.Columns[2].Width = 100;
-            dgvPagamentosBruto.Columns[3].Width = 50;
-            dgvPagamentosBruto.Columns[4].Width = 50;
+                dgvPagamentosBruto.Columns[1].HeaderText = "Nome";
+                dgvPagamentosBruto.Columns[2].HeaderText = "Valor (R$)";
+                dgvPagamentosBruto.Columns[3].HeaderText = "Mês";
+                dgvPagamentosBruto.Columns[4].HeaderText = "Ano";
 
-            dgvPagamentosBruto.Columns[1].DisplayIndex = 0;
-            dgvPagamentosBruto.Columns[2].DisplayIndex = 1;
-            dgvPagamentosBruto.Columns[3].DisplayIndex = 2;
-            dgvPagamentosBruto.Columns[4].DisplayIndex = 3;
+                dgvPagamentosBruto.Columns[1].Width = 180;
+                dgvPagamentosBruto.Columns[2].Width = 100;
+                dgvPagamentosBruto.Columns[3].Width = 50;
+                dgvPagamentosBruto.Columns[4].Width = 50;
+
+                dgvPagamentosBruto.Columns[1].DisplayIndex = 0;
+                dgvPagamentosBruto.Columns[2].DisplayIndex = 1;
+                dgvPagamentosBruto.Columns[3].DisplayIndex = 2;
+                dgvPagamentosBruto.Columns[4].DisplayIndex = 3;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
 
         public void TabelaImpostos()
         {
+            SqlConnection conexao = null;
 
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            SqlCommand pesquisar = new SqlCommand("SELECT imposto_id, membro_nome, imposto_taxa, pagamento_bruto_valor, imposto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_impostos INNER JOIN tb_membros ON tb_impostos.imposto_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_impostos.pagamento_mensal_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
+                SqlCommand pesquisar = new SqlCommand("SELECT imposto_id, membro_nome, imposto_taxa, pagamento_bruto_valor, imposto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_impostos INNER JOIN tb_membros ON tb_impostos.imposto_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_impostos.pagamento_mensal_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
 
-            conexao.Open();
+                conexao.Open();
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            conexao.Close();
+                conexao.Close();
 
-            DataTable tabela = new DataTable();
+                DataTable tabela = new DataTable();
 
-            registros.Fill(tabela);
+                registros.Fill(tabela);
 
-            dgvImpostos.DataSource = tabela;
+                dgvImpostos.DataSource = tabela;
 
-            dgvImpostos.Columns[0].Visible = false;
+                dgvImpostos.Columns[0].Visible = false;
 
-            dgvImpostos.Columns[1].HeaderText = "Nome";
-            dgvImpostos.Columns[2].HeaderText = "Taxa (%)";
-            dgvImpostos.Columns[3].HeaderText = "Pagamento (R$)";
-            dgvImpostos.Columns[4].HeaderText = "Imposto (R$)";
-            dgvImpostos.Columns[5].HeaderText = "Mês";
-            dgvImpostos.Columns[6].HeaderText = "Ano";
+                dgvImpostos.Columns[1].HeaderText = "Nome";
+                dgvImpostos.Columns[2].HeaderText = "Taxa (%)";
+                dgvImpostos.Columns[3].HeaderText = "Pagamento (R$)";
+                dgvImpostos.Columns[4].HeaderText = "Imposto (R$)";
+                dgvImpostos.Columns[5].HeaderText = "Mês";
+                dgvImpostos.Columns[6].HeaderText = "Ano";
 
-            dgvImpostos.Columns[1].Width = 180;
-            dgvImpostos.Columns[2].Width = 100;
-            dgvImpostos.Columns[3].Width = 100;
-            dgvImpostos.Columns[4].Width = 100;
-            dgvImpostos.Columns[5].Width = 50;
-            dgvImpostos.Columns[6].Width = 50;
+                dgvImpostos.Columns[1].Width = 180;
+                dgvImpostos.Columns[2].Width = 100;
+                dgvImpostos.Columns[3].Width = 100;
+                dgvImpostos.Columns[4].Width = 100;
+                dgvImpostos.Columns[5].Width = 50;
+                dgvImpostos.Columns[6].Width = 50;
 
-            dgvImpostos.Columns[1].DisplayIndex = 0;
-            dgvImpostos.Columns[2].DisplayIndex = 1;
-            dgvImpostos.Columns[3].DisplayIndex = 2;
-            dgvImpostos.Columns[4].DisplayIndex = 3;
-            dgvImpostos.Columns[5].DisplayIndex = 4;
-            dgvImpostos.Columns[6].DisplayIndex = 5;
+                dgvImpostos.Columns[1].DisplayIndex = 0;
+                dgvImpostos.Columns[2].DisplayIndex = 1;
+                dgvImpostos.Columns[3].DisplayIndex = 2;
+                dgvImpostos.Columns[4].DisplayIndex = 3;
+                dgvImpostos.Columns[5].DisplayIndex = 4;
+                dgvImpostos.Columns[6].DisplayIndex = 5;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
+            
         }    
 
         public void TabelaCondominioGastos()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT * From tb_condominio ORDER BY condominio_ano, condominio_mes", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT * From tb_condominio ORDER BY condominio_ano, condominio_mes", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvCondominio.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvCondominio.Columns[0].Visible = false;
+                dgvCondominio.DataSource = tabela;
 
-            dgvCondominio.Columns[1].HeaderText = "CPFL";
-            dgvCondominio.Columns[2].HeaderText = "SANEBAVI";
-            dgvCondominio.Columns[3].HeaderText = "Vivo";
-            dgvCondominio.Columns[4].HeaderText = "Correios";
-            dgvCondominio.Columns[5].HeaderText = "Água para beber";
-            dgvCondominio.Columns[6].HeaderText = "Copos";
-            dgvCondominio.Columns[7].HeaderText = "Papel higiênico";
-            dgvCondominio.Columns[8].HeaderText = "Papel toalha";
-            dgvCondominio.Columns[9].HeaderText = "Café";
-            dgvCondominio.Columns[10].HeaderText = "Açúcar";
-            dgvCondominio.Columns[11].HeaderText = "Produtos de limpeza";
-            dgvCondominio.Columns[12].HeaderText = "Faxina";
-            dgvCondominio.Columns[13].HeaderText = "Recarga de celular";
-            dgvCondominio.Columns[14].HeaderText = "Outros";
-            dgvCondominio.Columns[15].HeaderText = "Total (R$)";
-            dgvCondominio.Columns[16].HeaderText = "Mês";
-            dgvCondominio.Columns[17].HeaderText = "Ano";
+                dgvCondominio.Columns[0].Visible = false;
 
-            dgvCondominio.Columns[1].Width = 100;
-            dgvCondominio.Columns[2].Width = 100;
-            dgvCondominio.Columns[3].Width = 100;
-            dgvCondominio.Columns[4].Width = 100;
-            dgvCondominio.Columns[5].Width = 100;
-            dgvCondominio.Columns[6].Width = 100;
-            dgvCondominio.Columns[7].Width = 100;
-            dgvCondominio.Columns[8].Width = 100;
-            dgvCondominio.Columns[9].Width = 100;
-            dgvCondominio.Columns[10].Width = 100;
-            dgvCondominio.Columns[11].Width = 100;
-            dgvCondominio.Columns[12].Width = 100;
-            dgvCondominio.Columns[13].Width = 100;
-            dgvCondominio.Columns[14].Width = 100;
-            dgvCondominio.Columns[15].Width = 100;
-            dgvCondominio.Columns[16].Width = 50;
-            dgvCondominio.Columns[17].Width = 50;
+                dgvCondominio.Columns[1].HeaderText = "CPFL";
+                dgvCondominio.Columns[2].HeaderText = "SANEBAVI";
+                dgvCondominio.Columns[3].HeaderText = "Vivo";
+                dgvCondominio.Columns[4].HeaderText = "Correios";
+                dgvCondominio.Columns[5].HeaderText = "Água para beber";
+                dgvCondominio.Columns[6].HeaderText = "Copos";
+                dgvCondominio.Columns[7].HeaderText = "Papel higiênico";
+                dgvCondominio.Columns[8].HeaderText = "Papel toalha";
+                dgvCondominio.Columns[9].HeaderText = "Café";
+                dgvCondominio.Columns[10].HeaderText = "Açúcar";
+                dgvCondominio.Columns[11].HeaderText = "Produtos de limpeza";
+                dgvCondominio.Columns[12].HeaderText = "Faxina";
+                dgvCondominio.Columns[13].HeaderText = "Recarga de celular";
+                dgvCondominio.Columns[14].HeaderText = "Outros";
+                dgvCondominio.Columns[15].HeaderText = "Total (R$)";
+                dgvCondominio.Columns[16].HeaderText = "Mês";
+                dgvCondominio.Columns[17].HeaderText = "Ano";
 
-            dgvCondominio.Columns[1].DisplayIndex = 0;
-            dgvCondominio.Columns[2].DisplayIndex = 1;
-            dgvCondominio.Columns[3].DisplayIndex = 2;
-            dgvCondominio.Columns[4].DisplayIndex = 3;
-            dgvCondominio.Columns[5].DisplayIndex = 4;
-            dgvCondominio.Columns[6].DisplayIndex = 5;
-            dgvCondominio.Columns[7].DisplayIndex = 6;
-            dgvCondominio.Columns[8].DisplayIndex = 7;
-            dgvCondominio.Columns[9].DisplayIndex = 8;
-            dgvCondominio.Columns[10].DisplayIndex = 9;
-            dgvCondominio.Columns[11].DisplayIndex = 10;
-            dgvCondominio.Columns[12].DisplayIndex = 11;
-            dgvCondominio.Columns[13].DisplayIndex = 12;
-            dgvCondominio.Columns[14].DisplayIndex = 13;
-            dgvCondominio.Columns[15].DisplayIndex = 14;
-            dgvCondominio.Columns[16].DisplayIndex = 15;
-            dgvCondominio.Columns[17].DisplayIndex = 16;            
+                dgvCondominio.Columns[1].Width = 100;
+                dgvCondominio.Columns[2].Width = 100;
+                dgvCondominio.Columns[3].Width = 100;
+                dgvCondominio.Columns[4].Width = 100;
+                dgvCondominio.Columns[5].Width = 100;
+                dgvCondominio.Columns[6].Width = 100;
+                dgvCondominio.Columns[7].Width = 100;
+                dgvCondominio.Columns[8].Width = 100;
+                dgvCondominio.Columns[9].Width = 100;
+                dgvCondominio.Columns[10].Width = 100;
+                dgvCondominio.Columns[11].Width = 100;
+                dgvCondominio.Columns[12].Width = 100;
+                dgvCondominio.Columns[13].Width = 100;
+                dgvCondominio.Columns[14].Width = 100;
+                dgvCondominio.Columns[15].Width = 100;
+                dgvCondominio.Columns[16].Width = 50;
+                dgvCondominio.Columns[17].Width = 50;
+
+                dgvCondominio.Columns[1].DisplayIndex = 0;
+                dgvCondominio.Columns[2].DisplayIndex = 1;
+                dgvCondominio.Columns[3].DisplayIndex = 2;
+                dgvCondominio.Columns[4].DisplayIndex = 3;
+                dgvCondominio.Columns[5].DisplayIndex = 4;
+                dgvCondominio.Columns[6].DisplayIndex = 5;
+                dgvCondominio.Columns[7].DisplayIndex = 6;
+                dgvCondominio.Columns[8].DisplayIndex = 7;
+                dgvCondominio.Columns[9].DisplayIndex = 8;
+                dgvCondominio.Columns[10].DisplayIndex = 9;
+                dgvCondominio.Columns[11].DisplayIndex = 10;
+                dgvCondominio.Columns[12].DisplayIndex = 11;
+                dgvCondominio.Columns[13].DisplayIndex = 12;
+                dgvCondominio.Columns[14].DisplayIndex = 13;
+                dgvCondominio.Columns[15].DisplayIndex = 14;
+                dgvCondominio.Columns[16].DisplayIndex = 15;
+                dgvCondominio.Columns[17].DisplayIndex = 16;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         public void TabelaCondominioHoras()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT horas_trabalhadas_id, membro_nome, horas_trabalhadas, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_horas_trabalhadas INNER JOIN tb_membros ON tb_horas_trabalhadas.horas_trabalhadas_membro = tb_membros.membro_id ORDER BY horas_trabalhadas_ano, horas_trabalhadas_mes, membro_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT horas_trabalhadas_id, membro_nome, horas_trabalhadas, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_horas_trabalhadas INNER JOIN tb_membros ON tb_horas_trabalhadas.horas_trabalhadas_membro = tb_membros.membro_id ORDER BY horas_trabalhadas_ano, horas_trabalhadas_mes, membro_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvCondominio.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvCondominio.Columns[0].Visible = false;
+                dgvCondominio.DataSource = tabela;
 
-            dgvCondominio.Columns[1].HeaderText = "Nome";
-            dgvCondominio.Columns[2].HeaderText = "Horas na clínica";
-            dgvCondominio.Columns[3].HeaderText = "Mês";
-            dgvCondominio.Columns[4].HeaderText = "Ano";
+                dgvCondominio.Columns[0].Visible = false;
 
-            dgvCondominio.Columns[1].Width = 180;
-            dgvCondominio.Columns[2].Width = 100;
-            dgvCondominio.Columns[3].Width = 50;
-            dgvCondominio.Columns[4].Width = 50;
+                dgvCondominio.Columns[1].HeaderText = "Nome";
+                dgvCondominio.Columns[2].HeaderText = "Horas na clínica";
+                dgvCondominio.Columns[3].HeaderText = "Mês";
+                dgvCondominio.Columns[4].HeaderText = "Ano";
 
-            dgvCondominio.Columns[1].DisplayIndex = 0;
-            dgvCondominio.Columns[2].DisplayIndex = 1;
-            dgvCondominio.Columns[3].DisplayIndex = 2;
-            dgvCondominio.Columns[4].DisplayIndex = 3;
+                dgvCondominio.Columns[1].Width = 180;
+                dgvCondominio.Columns[2].Width = 100;
+                dgvCondominio.Columns[3].Width = 50;
+                dgvCondominio.Columns[4].Width = 50;
+
+                dgvCondominio.Columns[1].DisplayIndex = 0;
+                dgvCondominio.Columns[2].DisplayIndex = 1;
+                dgvCondominio.Columns[3].DisplayIndex = 2;
+                dgvCondominio.Columns[4].DisplayIndex = 3;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }            
         }
 
         public void TabelaCondominioMembros()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, horas_trabalhadas, hora_valor, membro_condominio_valor, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_membros_condominio INNER JOIN tb_membros ON tb_membros_condominio.condominio_membro = tb_membros.Membro_id INNER JOIN tb_condominio_hora_valor ON tb_membros_condominio.condominio_hora_valor = tb_condominio_hora_valor.hora_valor_id INNER JOIN tb_horas_trabalhadas ON tb_membros_condominio.membro_horas_trabalhadas = tb_horas_trabalhadas.horas_trabalhadas_id ORDER BY horas_trabalhadas_ano, horas_trabalhadas_mes, membro_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, horas_trabalhadas, hora_valor, membro_condominio_valor, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_membros_condominio INNER JOIN tb_membros ON tb_membros_condominio.condominio_membro = tb_membros.Membro_id INNER JOIN tb_condominio_hora_valor ON tb_membros_condominio.condominio_hora_valor = tb_condominio_hora_valor.hora_valor_id INNER JOIN tb_horas_trabalhadas ON tb_membros_condominio.membro_horas_trabalhadas = tb_horas_trabalhadas.horas_trabalhadas_id ORDER BY horas_trabalhadas_ano, horas_trabalhadas_mes, membro_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvCondominio.DataSource = tabela;
-            
+                registros.Fill(tabela);
 
-            dgvCondominio.Columns[0].HeaderText = "Nome";
-            dgvCondominio.Columns[1].HeaderText = "Horas na clínica";
-            dgvCondominio.Columns[2].HeaderText = "Valor da hora (R$)";
-            dgvCondominio.Columns[3].HeaderText = "Condomínio (R$)";
-            dgvCondominio.Columns[4].HeaderText = "Mês";
-            dgvCondominio.Columns[5].HeaderText = "Ano";
+                dgvCondominio.DataSource = tabela;
 
-            dgvCondominio.Columns[0].Width = 180;
-            dgvCondominio.Columns[1].Width = 100;
-            dgvCondominio.Columns[2].Width = 100;
-            dgvCondominio.Columns[3].Width = 100;
-            dgvCondominio.Columns[4].Width = 50;
-            dgvCondominio.Columns[5].Width = 50;
 
-            dgvCondominio.Columns[0].DisplayIndex = 0;
-            dgvCondominio.Columns[1].DisplayIndex = 1;
-            dgvCondominio.Columns[2].DisplayIndex = 2;
-            dgvCondominio.Columns[3].DisplayIndex = 3;
-            dgvCondominio.Columns[4].DisplayIndex = 4;
-            dgvCondominio.Columns[5].DisplayIndex = 5;
+                dgvCondominio.Columns[0].HeaderText = "Nome";
+                dgvCondominio.Columns[1].HeaderText = "Horas na clínica";
+                dgvCondominio.Columns[2].HeaderText = "Valor da hora (R$)";
+                dgvCondominio.Columns[3].HeaderText = "Condomínio (R$)";
+                dgvCondominio.Columns[4].HeaderText = "Mês";
+                dgvCondominio.Columns[5].HeaderText = "Ano";
+
+                dgvCondominio.Columns[0].Width = 180;
+                dgvCondominio.Columns[1].Width = 100;
+                dgvCondominio.Columns[2].Width = 100;
+                dgvCondominio.Columns[3].Width = 100;
+                dgvCondominio.Columns[4].Width = 50;
+                dgvCondominio.Columns[5].Width = 50;
+
+                dgvCondominio.Columns[0].DisplayIndex = 0;
+                dgvCondominio.Columns[1].DisplayIndex = 1;
+                dgvCondominio.Columns[2].DisplayIndex = 2;
+                dgvCondominio.Columns[3].DisplayIndex = 3;
+                dgvCondominio.Columns[4].DisplayIndex = 4;
+                dgvCondominio.Columns[5].DisplayIndex = 5;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }            
         }
 
 
         public void TabelaAluguel()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT aluguel_id, membro_nome, aluguel_periodo, aluguel_valor, aluguel_mes, aluguel_ano FROM tb_aluguel INNER JOIN tb_membros ON tb_aluguel.aluguel_membro = tb_membros.membro_id ORDER BY aluguel_ano, aluguel_mes, membro_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT aluguel_id, membro_nome, aluguel_periodo, aluguel_valor, aluguel_mes, aluguel_ano FROM tb_aluguel INNER JOIN tb_membros ON tb_aluguel.aluguel_membro = tb_membros.membro_id ORDER BY aluguel_ano, aluguel_mes, membro_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvAluguel.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvAluguel.Columns[0].Visible = false;
+                dgvAluguel.DataSource = tabela;
 
-            dgvAluguel.Columns[1].HeaderText = "Nome";
-            dgvAluguel.Columns[2].HeaderText = "Período";
-            dgvAluguel.Columns[3].HeaderText = "Aluguel (R$)";
-            dgvAluguel.Columns[4].HeaderText = "Mês";
-            dgvAluguel.Columns[5].HeaderText = "Ano";
+                dgvAluguel.Columns[0].Visible = false;
 
-            dgvAluguel.Columns[1].Width = 180;
-            dgvAluguel.Columns[2].Width = 100;
-            dgvAluguel.Columns[3].Width = 100;
-            dgvAluguel.Columns[4].Width = 50;
-            dgvAluguel.Columns[5].Width = 50;
+                dgvAluguel.Columns[1].HeaderText = "Nome";
+                dgvAluguel.Columns[2].HeaderText = "Período";
+                dgvAluguel.Columns[3].HeaderText = "Aluguel (R$)";
+                dgvAluguel.Columns[4].HeaderText = "Mês";
+                dgvAluguel.Columns[5].HeaderText = "Ano";
 
-            dgvAluguel.Columns[1].DisplayIndex = 0;
-            dgvAluguel.Columns[2].DisplayIndex = 1;
-            dgvAluguel.Columns[3].DisplayIndex = 2;
-            dgvAluguel.Columns[4].DisplayIndex = 3;
-            dgvAluguel.Columns[5].DisplayIndex = 4;            
+                dgvAluguel.Columns[1].Width = 180;
+                dgvAluguel.Columns[2].Width = 100;
+                dgvAluguel.Columns[3].Width = 100;
+                dgvAluguel.Columns[4].Width = 50;
+                dgvAluguel.Columns[5].Width = 50;
+
+                dgvAluguel.Columns[1].DisplayIndex = 0;
+                dgvAluguel.Columns[2].DisplayIndex = 1;
+                dgvAluguel.Columns[3].DisplayIndex = 2;
+                dgvAluguel.Columns[4].DisplayIndex = 3;
+                dgvAluguel.Columns[5].DisplayIndex = 4;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }              
         }
 
        
         public void TabelaPagamentosLiquido()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, aluguel_valor, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_nao_socios INNER JOIN tb_membros ON tb_pagamentos_nao_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_nao_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_nao_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_nao_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id INNER JOIN tb_aluguel ON tb_pagamentos_nao_socios.desconto_aluguel = tb_aluguel.aluguel_id UNION SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_socios INNER JOIN tb_membros ON tb_pagamentos_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id UNION SELECT membro_nome, pagamento_bruto_valor, desconto_imposto, desconto_condominio, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_secretaria INNER JOIN tb_membros ON tb_pagamentos_secretaria.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_secretaria.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, aluguel_valor, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_nao_socios INNER JOIN tb_membros ON tb_pagamentos_nao_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_nao_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_nao_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_nao_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id INNER JOIN tb_aluguel ON tb_pagamentos_nao_socios.desconto_aluguel = tb_aluguel.aluguel_id UNION SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_socios INNER JOIN tb_membros ON tb_pagamentos_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id UNION SELECT membro_nome, pagamento_bruto_valor, desconto_imposto, desconto_condominio, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_secretaria INNER JOIN tb_membros ON tb_pagamentos_secretaria.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_secretaria.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id ORDER BY pagamento_bruto_ano, pagamento_bruto_mes, membro_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvPagamentosLiquido.DataSource = tabela;            
+                registros.Fill(tabela);
 
-            dgvPagamentosLiquido.Columns[0].HeaderText = "Nome";
-            dgvPagamentosLiquido.Columns[1].HeaderText = "Valor bruto (R$)";
-            dgvPagamentosLiquido.Columns[2].HeaderText = "Imposto (R$)";
-            dgvPagamentosLiquido.Columns[3].HeaderText = "Condomínio (R$)";
-            dgvPagamentosLiquido.Columns[4].HeaderText = "Aluguel (R$)";
-            dgvPagamentosLiquido.Columns[5].HeaderText = "Valor líquido (R$)";
-            dgvPagamentosLiquido.Columns[6].HeaderText = "Mês";
-            dgvPagamentosLiquido.Columns[7].HeaderText = "Ano";
+                dgvPagamentosLiquido.DataSource = tabela;
 
-            dgvPagamentosLiquido.Columns[0].Width = 180;
-            dgvPagamentosLiquido.Columns[1].Width = 100;
-            dgvPagamentosLiquido.Columns[2].Width = 100;
-            dgvPagamentosLiquido.Columns[3].Width = 100;
-            dgvPagamentosLiquido.Columns[4].Width = 100;
-            dgvPagamentosLiquido.Columns[5].Width = 110;
-            dgvPagamentosLiquido.Columns[6].Width = 50;
-            dgvPagamentosLiquido.Columns[7].Width = 50;
+                dgvPagamentosLiquido.Columns[0].HeaderText = "Nome";
+                dgvPagamentosLiquido.Columns[1].HeaderText = "Valor bruto (R$)";
+                dgvPagamentosLiquido.Columns[2].HeaderText = "Imposto (R$)";
+                dgvPagamentosLiquido.Columns[3].HeaderText = "Condomínio (R$)";
+                dgvPagamentosLiquido.Columns[4].HeaderText = "Aluguel (R$)";
+                dgvPagamentosLiquido.Columns[5].HeaderText = "Valor líquido (R$)";
+                dgvPagamentosLiquido.Columns[6].HeaderText = "Mês";
+                dgvPagamentosLiquido.Columns[7].HeaderText = "Ano";
 
-            dgvPagamentosLiquido.Columns[0].DisplayIndex = 0;
-            dgvPagamentosLiquido.Columns[1].DisplayIndex = 1;
-            dgvPagamentosLiquido.Columns[2].DisplayIndex = 2;
-            dgvPagamentosLiquido.Columns[3].DisplayIndex = 3;
-            dgvPagamentosLiquido.Columns[4].DisplayIndex = 4;
-            dgvPagamentosLiquido.Columns[5].DisplayIndex = 5;
-            dgvPagamentosLiquido.Columns[6].DisplayIndex = 6;
-            dgvPagamentosLiquido.Columns[7].DisplayIndex = 7;
+                dgvPagamentosLiquido.Columns[0].Width = 180;
+                dgvPagamentosLiquido.Columns[1].Width = 100;
+                dgvPagamentosLiquido.Columns[2].Width = 100;
+                dgvPagamentosLiquido.Columns[3].Width = 100;
+                dgvPagamentosLiquido.Columns[4].Width = 100;
+                dgvPagamentosLiquido.Columns[5].Width = 110;
+                dgvPagamentosLiquido.Columns[6].Width = 50;
+                dgvPagamentosLiquido.Columns[7].Width = 50;
+
+                dgvPagamentosLiquido.Columns[0].DisplayIndex = 0;
+                dgvPagamentosLiquido.Columns[1].DisplayIndex = 1;
+                dgvPagamentosLiquido.Columns[2].DisplayIndex = 2;
+                dgvPagamentosLiquido.Columns[3].DisplayIndex = 3;
+                dgvPagamentosLiquido.Columns[4].DisplayIndex = 4;
+                dgvPagamentosLiquido.Columns[5].DisplayIndex = 5;
+                dgvPagamentosLiquido.Columns[6].DisplayIndex = 6;
+                dgvPagamentosLiquido.Columns[7].DisplayIndex = 7;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }           
         }      
 
         public void TabelaEscritorio()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio ORDER BY escritorio_ano, escritorio_mes", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio ORDER BY escritorio_ano, escritorio_mes", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvEscritorio.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvEscritorio.Columns[0].Visible = false;
+                dgvEscritorio.DataSource = tabela;
 
-            dgvEscritorio.Columns[1].HeaderText = "PIS";
-            dgvEscritorio.Columns[2].HeaderText = "COFINS";
-            dgvEscritorio.Columns[3].HeaderText = "ISS";
-            dgvEscritorio.Columns[4].HeaderText = "INSS";
-            dgvEscritorio.Columns[5].HeaderText = "IR";
-            dgvEscritorio.Columns[6].HeaderText = "CS";
-            dgvEscritorio.Columns[7].HeaderText = "CIEE";
-            dgvEscritorio.Columns[8].HeaderText = "Aluguel";
-            dgvEscritorio.Columns[9].HeaderText = "Escritório";
-            dgvEscritorio.Columns[10].HeaderText = "Total (R$)";
-            dgvEscritorio.Columns[11].HeaderText = "Mês";
-            dgvEscritorio.Columns[12].HeaderText = "Ano";
+                dgvEscritorio.Columns[0].Visible = false;
 
-            dgvEscritorio.Columns[1].Width = 100;
-            dgvEscritorio.Columns[2].Width = 100;
-            dgvEscritorio.Columns[3].Width = 100;
-            dgvEscritorio.Columns[4].Width = 100;
-            dgvEscritorio.Columns[5].Width = 100;
-            dgvEscritorio.Columns[6].Width = 100;
-            dgvEscritorio.Columns[7].Width = 100;
-            dgvEscritorio.Columns[8].Width = 100;
-            dgvEscritorio.Columns[9].Width = 100;
-            dgvEscritorio.Columns[10].Width = 100;
-            dgvEscritorio.Columns[11].Width = 50;
-            dgvEscritorio.Columns[12].Width = 50;
+                dgvEscritorio.Columns[1].HeaderText = "PIS";
+                dgvEscritorio.Columns[2].HeaderText = "COFINS";
+                dgvEscritorio.Columns[3].HeaderText = "ISS";
+                dgvEscritorio.Columns[4].HeaderText = "INSS";
+                dgvEscritorio.Columns[5].HeaderText = "IR";
+                dgvEscritorio.Columns[6].HeaderText = "CS";
+                dgvEscritorio.Columns[7].HeaderText = "CIEE";
+                dgvEscritorio.Columns[8].HeaderText = "Aluguel";
+                dgvEscritorio.Columns[9].HeaderText = "Escritório";
+                dgvEscritorio.Columns[10].HeaderText = "Total (R$)";
+                dgvEscritorio.Columns[11].HeaderText = "Mês";
+                dgvEscritorio.Columns[12].HeaderText = "Ano";
 
-            dgvEscritorio.Columns[1].DisplayIndex = 0;
-            dgvEscritorio.Columns[2].DisplayIndex = 1;
-            dgvEscritorio.Columns[3].DisplayIndex = 2;
-            dgvEscritorio.Columns[4].DisplayIndex = 3;
-            dgvEscritorio.Columns[5].DisplayIndex = 4;
-            dgvEscritorio.Columns[6].DisplayIndex = 5;
-            dgvEscritorio.Columns[7].DisplayIndex = 6;
-            dgvEscritorio.Columns[8].DisplayIndex = 7;
-            dgvEscritorio.Columns[9].DisplayIndex = 8;
-            dgvEscritorio.Columns[10].DisplayIndex = 9;
-            dgvEscritorio.Columns[11].DisplayIndex = 10;
-            dgvEscritorio.Columns[12].DisplayIndex = 11;            
+                dgvEscritorio.Columns[1].Width = 100;
+                dgvEscritorio.Columns[2].Width = 100;
+                dgvEscritorio.Columns[3].Width = 100;
+                dgvEscritorio.Columns[4].Width = 100;
+                dgvEscritorio.Columns[5].Width = 100;
+                dgvEscritorio.Columns[6].Width = 100;
+                dgvEscritorio.Columns[7].Width = 100;
+                dgvEscritorio.Columns[8].Width = 100;
+                dgvEscritorio.Columns[9].Width = 100;
+                dgvEscritorio.Columns[10].Width = 100;
+                dgvEscritorio.Columns[11].Width = 50;
+                dgvEscritorio.Columns[12].Width = 50;
+
+                dgvEscritorio.Columns[1].DisplayIndex = 0;
+                dgvEscritorio.Columns[2].DisplayIndex = 1;
+                dgvEscritorio.Columns[3].DisplayIndex = 2;
+                dgvEscritorio.Columns[4].DisplayIndex = 3;
+                dgvEscritorio.Columns[5].DisplayIndex = 4;
+                dgvEscritorio.Columns[6].DisplayIndex = 5;
+                dgvEscritorio.Columns[7].DisplayIndex = 6;
+                dgvEscritorio.Columns[8].DisplayIndex = 7;
+                dgvEscritorio.Columns[9].DisplayIndex = 8;
+                dgvEscritorio.Columns[10].DisplayIndex = 9;
+                dgvEscritorio.Columns[11].DisplayIndex = 10;
+                dgvEscritorio.Columns[12].DisplayIndex = 11;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }                        
         }
 
         public void TabelaConvenios()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios ORDER BY convenio_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios ORDER BY convenio_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvConvenio.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvConvenio.Columns[0].Visible = false;
+                dgvConvenio.DataSource = tabela;
 
-            dgvConvenio.Columns[1].HeaderText = "Convênio";
+                dgvConvenio.Columns[0].Visible = false;
 
-            dgvConvenio.Columns[1].Width = 180;
+                dgvConvenio.Columns[1].HeaderText = "Convênio";
+
+                dgvConvenio.Columns[1].Width = 180;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }            
         }
 
         public void TabelaConveniosValores()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT convenio_valor_id, convenio_nome, convenio_valor_inicial, convenio_valor_glosa, convenio_valor_desconto, convenio_valor_final, convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores INNER JOIN tb_convenios ON tb_convenios_valores.convenio = tb_convenios.convenio_id ORDER BY convenio_valor_ano, convenio_valor_mes, convenio_nome;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT convenio_valor_id, convenio_nome, convenio_valor_inicial, convenio_valor_glosa, convenio_valor_desconto, convenio_valor_final, convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores INNER JOIN tb_convenios ON tb_convenios_valores.convenio = tb_convenios.convenio_id ORDER BY convenio_valor_ano, convenio_valor_mes, convenio_nome;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvConvenio.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvConvenio.Columns[0].Visible = false;
+                dgvConvenio.DataSource = tabela;
 
-            dgvConvenio.Columns[1].HeaderText = "Convênio";
-            dgvConvenio.Columns[2].HeaderText = "Valor bruto (R$)";
-            dgvConvenio.Columns[3].HeaderText = "Glosa (R$)";
-            dgvConvenio.Columns[4].HeaderText = "Desconto (%)";
-            dgvConvenio.Columns[5].HeaderText = "Valor líquido (R$)";
-            dgvConvenio.Columns[6].HeaderText = "Mês";
-            dgvConvenio.Columns[7].HeaderText = "Ano";
+                dgvConvenio.Columns[0].Visible = false;
 
-            dgvConvenio.Columns[1].Width = 150;
-            dgvConvenio.Columns[2].Width = 110;
-            dgvConvenio.Columns[3].Width = 110;
-            dgvConvenio.Columns[4].Width = 110;
-            dgvConvenio.Columns[5].Width = 110;
-            dgvConvenio.Columns[6].Width = 50;
-            dgvConvenio.Columns[7].Width = 50;
+                dgvConvenio.Columns[1].HeaderText = "Convênio";
+                dgvConvenio.Columns[2].HeaderText = "Valor bruto (R$)";
+                dgvConvenio.Columns[3].HeaderText = "Glosa (R$)";
+                dgvConvenio.Columns[4].HeaderText = "Desconto (%)";
+                dgvConvenio.Columns[5].HeaderText = "Valor líquido (R$)";
+                dgvConvenio.Columns[6].HeaderText = "Mês";
+                dgvConvenio.Columns[7].HeaderText = "Ano";
 
-            dgvConvenio.Columns[1].DisplayIndex = 0;
-            dgvConvenio.Columns[2].DisplayIndex = 1;
-            dgvConvenio.Columns[3].DisplayIndex = 2;
-            dgvConvenio.Columns[4].DisplayIndex = 3;
-            dgvConvenio.Columns[5].DisplayIndex = 4;
-            dgvConvenio.Columns[6].DisplayIndex = 5;
-            dgvConvenio.Columns[7].DisplayIndex = 6;            
+                dgvConvenio.Columns[1].Width = 150;
+                dgvConvenio.Columns[2].Width = 110;
+                dgvConvenio.Columns[3].Width = 110;
+                dgvConvenio.Columns[4].Width = 110;
+                dgvConvenio.Columns[5].Width = 110;
+                dgvConvenio.Columns[6].Width = 50;
+                dgvConvenio.Columns[7].Width = 50;
+
+                dgvConvenio.Columns[1].DisplayIndex = 0;
+                dgvConvenio.Columns[2].DisplayIndex = 1;
+                dgvConvenio.Columns[3].DisplayIndex = 2;
+                dgvConvenio.Columns[4].DisplayIndex = 3;
+                dgvConvenio.Columns[5].DisplayIndex = 4;
+                dgvConvenio.Columns[6].DisplayIndex = 5;
+                dgvConvenio.Columns[7].DisplayIndex = 6;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }                      
         }
 
         public void TabelaSaldos()
         {
-            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+            SqlConnection conexao = null;
 
-            SqlCommand pesquisar = new SqlCommand("SELECT saldo_id, saldo_valor_inicial, escritorio_total, pagamentos_valor, saldo_valor, saldo_mes, saldo_ano FROM tb_saldos INNER JOIN tb_escritorio ON tb_saldos.escritorio_valor = tb_escritorio.escritorio_id ORDER BY saldo_ano, saldo_mes;", conexao);
+            try
+            {
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
-            conexao.Open();
+                SqlCommand pesquisar = new SqlCommand("SELECT saldo_id, saldo_valor_inicial, escritorio_total, pagamentos_valor, saldo_valor, saldo_mes, saldo_ano FROM tb_saldos INNER JOIN tb_escritorio ON tb_saldos.escritorio_valor = tb_escritorio.escritorio_id ORDER BY saldo_ano, saldo_mes;", conexao);
 
-            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+                conexao.Open();
 
-            conexao.Close();
+                SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
 
-            DataTable tabela = new DataTable();
+                conexao.Close();
 
-            registros.Fill(tabela);
+                DataTable tabela = new DataTable();
 
-            dgvSaldo.DataSource = tabela;
+                registros.Fill(tabela);
 
-            dgvSaldo.Columns[0].Visible = false;
+                dgvSaldo.DataSource = tabela;
 
-            dgvSaldo.Columns[1].HeaderText = "Rendimento (R$)";
-            dgvSaldo.Columns[2].HeaderText = "Escritório (R$)";
-            dgvSaldo.Columns[3].HeaderText = "Pagamentos (R$)";
-            dgvSaldo.Columns[4].HeaderText = "Saldo (R$)";
-            dgvSaldo.Columns[5].HeaderText = "Mês";
-            dgvSaldo.Columns[6].HeaderText = "Ano";
+                dgvSaldo.Columns[0].Visible = false;
 
-            dgvSaldo.Columns[1].Width = 100;
-            dgvSaldo.Columns[2].Width = 100;
-            dgvSaldo.Columns[3].Width = 100;
-            dgvSaldo.Columns[4].Width = 100;
-            dgvSaldo.Columns[5].Width = 50;
-            dgvSaldo.Columns[6].Width = 50;
+                dgvSaldo.Columns[1].HeaderText = "Rendimento (R$)";
+                dgvSaldo.Columns[2].HeaderText = "Escritório (R$)";
+                dgvSaldo.Columns[3].HeaderText = "Pagamentos (R$)";
+                dgvSaldo.Columns[4].HeaderText = "Saldo (R$)";
+                dgvSaldo.Columns[5].HeaderText = "Mês";
+                dgvSaldo.Columns[6].HeaderText = "Ano";
 
-            dgvSaldo.Columns[1].DisplayIndex = 0;
-            dgvSaldo.Columns[2].DisplayIndex = 1;
-            dgvSaldo.Columns[3].DisplayIndex = 2;
-            dgvSaldo.Columns[4].DisplayIndex = 3;
-            dgvSaldo.Columns[5].DisplayIndex = 4;
-            dgvSaldo.Columns[6].DisplayIndex = 5;
+                dgvSaldo.Columns[1].Width = 100;
+                dgvSaldo.Columns[2].Width = 100;
+                dgvSaldo.Columns[3].Width = 100;
+                dgvSaldo.Columns[4].Width = 100;
+                dgvSaldo.Columns[5].Width = 50;
+                dgvSaldo.Columns[6].Width = 50;
+
+                dgvSaldo.Columns[1].DisplayIndex = 0;
+                dgvSaldo.Columns[2].DisplayIndex = 1;
+                dgvSaldo.Columns[3].DisplayIndex = 2;
+                dgvSaldo.Columns[4].DisplayIndex = 3;
+                dgvSaldo.Columns[5].DisplayIndex = 4;
+                dgvSaldo.Columns[6].DisplayIndex = 5;
+            }
+            catch (Exception erro)
+            {
+                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }            
         }
 
 
@@ -611,17 +804,9 @@ namespace Contabilidade_clínica
         private void tabMembros_Enter(object sender, EventArgs e)    
         {
             txtNome.Focus();
-
-            try
-            {
-                TabelaMembros();
-            }
-            catch(Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-                       
             
+            TabelaMembros();
+                                              
             txtNome.Clear();                      
             cbFuncao.SelectedIndex = -1;                  
             cbRelacao.SelectedIndex = -1;                     
@@ -642,13 +827,15 @@ namespace Contabilidade_clínica
             {
                 var botao = MessageBox.Show("Confirmar a inserção de um novo membro da clínica?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                SqlConnection conexao = null;
+
                 if (botao == DialogResult.Yes)
                 {
                     try
                     {
                         Membros membros = new Membros(txtNome.Text, cbFuncao.Text, cbRelacao.Text, "Ativa");
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT membro_nome FROM tb_membros WHERE membro_nome = @nome;", conexao);
 
@@ -693,6 +880,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -734,9 +928,11 @@ namespace Contabilidade_clínica
 
         private void txtNomePesquisar_TextChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("Select * FROM tb_membros WHERE membro_nome LIKE @nome ORDER BY membro_nome", conexao);
 
@@ -758,15 +954,24 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void cbSituacaoPesquisar_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
                 Membros membros = new Membros(cbSituacaoPesquisar.Text);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_Membros WHERE membro_situacao = @situacao ORDER BY membro_nome", conexao);
 
@@ -787,6 +992,13 @@ namespace Contabilidade_clínica
             catch(Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
         }
 
@@ -815,16 +1027,9 @@ namespace Contabilidade_clínica
        
         private void tabPagamentosBruto_Enter(object sender, EventArgs e)
         {
-            try
-            {
-                TabelaPagamentosBruto();
-            }
-            catch(Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-          
+           
+            TabelaPagamentosBruto();
+            
             cbPagamentosBrutoMembros.SelectedIndex = -1;                 
             txtPagamentosBrutoValor.Clear();                                   
             cbPagamentosBrutoPesquisar.SelectedIndex = -1;                    
@@ -839,9 +1044,11 @@ namespace Contabilidade_clínica
 
         private void cbPagamentosBrutoMembros_DropDown(object sender, EventArgs e)   //Os nomes a serem inseridos na tabela de pagamentos (valor bruto) serão carregados do banco de dados. É necessário que o membro esteja com a situação como 'Ativa' na tabela da aba 'Membros da clínica' para que seu nome apareça neste menu
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_membros WHERE membro_situacao = 'Ativa' ORDER BY membro_nome;", conexao);
 
@@ -862,6 +1069,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
         } 
 
@@ -927,13 +1141,15 @@ namespace Contabilidade_clínica
             {
                 var botao = MessageBox.Show("Confirmar a inserção de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                SqlConnection conexao = null;
+
                 if (botao == DialogResult.Yes)
                 {
                     try
                     {
                         PagamentosBruto pagamentos = new PagamentosBruto(Convert.ToInt32(cbPagamentosBrutoMembros.SelectedValue), Convert.ToDecimal(txtPagamentosBrutoValor.Text), cbPagamentosBrutoMes.Text, txtPagamentosBrutoAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         conexao.Open();
                         
@@ -1006,6 +1222,13 @@ namespace Contabilidade_clínica
                     catch (Exception erro)
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
                     }
                 }
             }
@@ -1091,11 +1314,13 @@ namespace Contabilidade_clínica
              }
              else
              {
-                 try
-                 {
+                SqlConnection conexao = null;
+
+                try
+                {
                      PagamentosBruto pagamentos = new PagamentosBruto(cbPagamentosBrutoPesquisarMes.Text, txtPagamentosBrutoPesquisarAno.Text);
 
-                     SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                     conexao = new SqlConnection(StringConexao.stringConexao);
 
                      SqlCommand pesquisar = new SqlCommand("SELECT pagamento_bruto_id, membro_nome, pagamento_bruto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano ORDER BY membro_nome;", conexao);
 
@@ -1113,20 +1338,29 @@ namespace Contabilidade_clínica
                      registros.Fill(tabela);
 
                      dgvPagamentosBruto.DataSource = tabela;
-                 }
-                 catch (Exception erro)
-                 {
+                }
+                catch (Exception erro)
+                {
                      MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                 }
-             }
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
+            }
                        
         }
 
         private void txtPagamentosBrutoPesquisarNome_TextChanged(object sender, EventArgs e)
-        {  
+        {
+            SqlConnection conexao = null;
+
             try
             {
-               SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -1157,13 +1391,46 @@ namespace Contabilidade_clínica
             {
               MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
 
         //Aba 'Imposto'
         //Nesta aba, será calculado o valor do imposto sobre o pagamento (valor bruto), informado na aba 'Pagamentos - valor bruto' que consiste em uma porcentagem sobre o pagamento. O imposto é pago pelos psicólogos e psiquiatras
 
-        
+        private void tabImposto_Enter(object sender, EventArgs e)
+        {
+            TabelaImpostos();
+
+            if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
+            {
+                cbImpostoMes.Text = cbPagamentosBrutoMes.Text;
+                txtImpostoAno.Text = txtPagamentosBrutoAno.Text;
+            }
+            else
+            {
+                cbImpostoMes.SelectedIndex = -1;
+                txtImpostoAno.Clear();
+            }
+
+            cbImpostoNome.SelectedIndex = -1;
+            txtImpostoTaxa.Clear();
+            cbImpostoPesquisar.SelectedIndex = -1;
+            cbImpostoPesquisarMes.SelectedIndex = -1;
+            cbImpostoPesquisarMes.Visible = false;
+            txtImpostoPesquisarAno.Clear();
+            txtImpostoPesquisarAno.Visible = false;
+            txtImpostoPesquisarNome.Clear();
+            txtImpostoPesquisarNome.Visible = false;
+            btnImpostoPesquisar.Visible = false;
+        }
+
         private void txtImpostoAno_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8 || txtImpostoAno.Text.Length == 4 && e.KeyChar != 8)
@@ -1246,13 +1513,15 @@ namespace Contabilidade_clínica
             {
                 var botao = MessageBox.Show("Confirmar a inserção de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                SqlConnection conexao = null;
+
                 if (botao == DialogResult.Yes)
                 {
                     try
                     {
                         PagamentosBruto pagamento = new PagamentosBruto(Convert.ToInt32(cbImpostoNome.SelectedValue), cbImpostoMes.Text, txtImpostoAno.Text);    //A data da tabela imposto é herdada da tabela de pagamentos (valor bruto). Também desta tabela de pagamentos será pego o valor do pagamento
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT pagamento_bruto_id, pagamento_bruto_valor FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_membro = @membro AND pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano", conexao);
 
@@ -1320,44 +1589,16 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
-        }
-
-        private void tabImposto_Enter(object sender, EventArgs e)
-        {
-            try
-            {
-                TabelaImpostos();
-            }
-            catch(Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            
-            if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
-            {
-                cbImpostoMes.Text = cbPagamentosBrutoMes.Text;
-                txtImpostoAno.Text = txtPagamentosBrutoAno.Text;
-            }
-            else
-            {
-                cbImpostoMes.SelectedIndex = -1;
-                txtImpostoAno.Clear();
-            }
-
-            cbImpostoNome.SelectedIndex = -1;        
-            txtImpostoTaxa.Clear();         
-            cbImpostoPesquisar.SelectedIndex = -1;          
-            cbImpostoPesquisarMes.SelectedIndex = -1;
-            cbImpostoPesquisarMes.Visible = false;
-            txtImpostoPesquisarAno.Clear();
-            txtImpostoPesquisarAno.Visible = false;
-            txtImpostoPesquisarNome.Clear();
-            txtImpostoPesquisarNome.Visible = false;
-            btnImpostoPesquisar.Visible = false;
-        }
+        }        
 
         private void cbImpostoNome_DropDown(object sender, EventArgs e)   //Os nomes dos membros da clínica disponíveis serão os que que estão registrados com a função de 'Psiquiatria e/ou psicologia' e possuem registros de pagamentos na aba 'Pagamentos - valor bruto' na data informada
         {
@@ -1373,11 +1614,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbImpostoMes.Text, txtImpostoAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
 
@@ -1404,6 +1647,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }
@@ -1488,11 +1738,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbImpostoPesquisarMes.Text, txtImpostoPesquisarAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT imposto_id, membro_nome, imposto_taxa, pagamento_bruto_valor, imposto_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_impostos INNER JOIN tb_membros ON tb_impostos.imposto_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_impostos.pagamento_mensal_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano ORDER BY membro_nome;", conexao);
 
@@ -1515,14 +1767,23 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
         private void txtImpostoPesquisarNome_TextChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -1553,13 +1814,59 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }       
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
+        }
 
 
         //Aba Condomínio
-       //Cada membro da clínica que seja psicólogo/psiquiatra e não seja sócio deve pagar uma parcela dos gastos de condomínio. A aba conterá três partes
-        
-        
+        //Cada membro da clínica que seja psicólogo/psiquiatra e não seja sócio deve pagar uma parcela dos gastos de condomínio. A aba conterá três partes
+
+        private void tabCondominio_Enter(object sender, EventArgs e)
+        {
+            TabelaCondominioGastos();
+
+            if (txtCondominioAba.Text == "parte2")
+            {
+                rbCondominioHoras.Checked = true;
+            }
+            else
+            {
+                rbCondominioMensal.Checked = true;
+            }
+
+            if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
+            {
+                cbCondominioMes.Text = cbPagamentosBrutoMes.Text;
+                txtCondominioAno.Text = txtPagamentosBrutoAno.Text;
+            }
+            else
+            {
+                cbCondominioMes.SelectedIndex = -1;
+                txtCondominioAno.Clear();
+            }
+
+            cbCondominioNome.SelectedIndex = -1;
+            txtCondominioHoras.Clear();
+            cbCondominioPesquisarMes.SelectedIndex = -1;
+            cbCondominioPesquisarMes.Visible = false;
+            txtCondominioPesquisarAno.Clear();
+            txtCondominioPesquisarAno.Visible = false;
+            btnCondominioPesquisar.Visible = false;
+            btnCondominioGastosPesquisarImprimir.Visible = false;
+            cbCondominioPesquisar.SelectedIndex = -1;
+        }
+
+        private void tabCondominio_Leave(object sender, EventArgs e)
+        {
+            txtCondominioAba.Clear();
+        }
+
         private void rbCondominioMensal_CheckedChanged(object sender, EventArgs e)   //Na primeira parte será informado os gastos de condomínio
         {
             lblCondominioGastos.Visible = true;
@@ -1600,15 +1907,8 @@ namespace Contabilidade_clínica
             btnCondominioGastosPesquisarImprimir.Visible = false;
 
             txtCondominioAba.Clear();
-
-            try
-            {
-               TabelaCondominioGastos();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+ 
+            TabelaCondominioGastos();           
         }
 
         private void rbCondominioHoras_CheckedChanged(object sender, EventArgs e)    //Na segunda parte será informado as horas trabalhadas de cada membro da clínica
@@ -1655,14 +1955,7 @@ namespace Contabilidade_clínica
             btnCondominioPesquisar.Visible = false;
             btnCondominioGastosPesquisarImprimir.Visible = false;
 
-            try
-            {
-                TabelaCondominioHoras();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            TabelaCondominioHoras();
         }
 
         private void rbCondominioMembros_CheckedChanged(object sender, EventArgs e)    //Na terceira parte será calculado o valor de condomínio que deverá ser pago por cada membro da clínica
@@ -1706,15 +1999,8 @@ namespace Contabilidade_clínica
             btnCondominioGastosPesquisarImprimir.Visible = false;
 
             txtCondominioAba.Clear();
-
-            try
-            {
-                TabelaCondominioMembros();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+         
+            TabelaCondominioMembros();       
         }        
 
         private void btnCondominioInserir_Click(object sender, EventArgs e)
@@ -1736,54 +2022,7 @@ namespace Contabilidade_clínica
 
             condominio.Show();
             this.Hide();
-        }
-
-        private void tabCondominio_Enter(object sender, EventArgs e)
-        {
-             try
-             {
-                 TabelaCondominioGastos();
-             }
-             catch (Exception erro)
-             {
-                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-             }
-
-            if (txtCondominioAba.Text == "parte2")
-            {
-                rbCondominioHoras.Checked = true;
-            }
-            else
-            {
-                rbCondominioMensal.Checked = true;
-            }
-            
-            if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
-            {
-                cbCondominioMes.Text = cbPagamentosBrutoMes.Text;
-                txtCondominioAno.Text = txtPagamentosBrutoAno.Text;
-            }
-            else
-            {
-                cbCondominioMes.SelectedIndex = -1;
-                txtCondominioAno.Clear();
-            }
-
-            cbCondominioNome.SelectedIndex = -1;       
-            txtCondominioHoras.Clear();
-            cbCondominioPesquisarMes.SelectedIndex = -1;
-            cbCondominioPesquisarMes.Visible = false;
-            txtCondominioPesquisarAno.Clear();
-            txtCondominioPesquisarAno.Visible = false;
-            btnCondominioPesquisar.Visible = false;
-            btnCondominioGastosPesquisarImprimir.Visible = false;
-            cbCondominioPesquisar.SelectedIndex = -1;
-        }
-
-        private void tabCondominio_Leave(object sender, EventArgs e)
-        {
-            txtCondominioAba.Clear();
-        }
+        }        
 
         private void cbPesquisarCondominioGastos_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1875,273 +2114,6 @@ namespace Contabilidade_clínica
             btnCondominioGastosPesquisarImprimir.Visible = false;
         }
 
-        private void btnCondominioPesquisar_Click(object sender, EventArgs e)
-        {
-            if (rbCondominioMensal.Checked)
-            {
-                if (cbCondominioPesquisar.Text == "Mês e ano")
-                {
-                    if (cbCondominioPesquisarMes.Text == "" || txtCondominioPesquisarAno.Text == "")
-                    {
-                        MessageBox.Show("Informe todas as informações para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
-                    {
-                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                       try
-                       {
-                            CondominioGastos condominio = new CondominioGastos(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
-
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano;", conexao);
-
-                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
-                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
-
-                            conexao.Open();
-
-                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
-
-                            conexao.Close();
-
-                            DataTable tabela = new DataTable();
-
-                            registros.Fill(tabela);
-
-                            dgvCondominio.DataSource = tabela;
-
-                            if (tabela.Rows.Count > 0)
-                            {
-                                btnCondominioGastosPesquisarImprimir.Visible = true;
-                            }
-                        }
-                       catch (Exception erro)
-                       {
-                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                       }
-                    }
-                }
-                else if (cbCondominioPesquisar.Text == "Ano")
-                {
-                    if (txtCondominioPesquisarAno.Text == "")
-                    {
-                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
-                    {
-                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            CondominioGastos condominio = new CondominioGastos(txtCondominioPesquisarAno.Text);
-
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_ano = @ano ORDER BY condominio_mes;", conexao);
-
-                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
-
-                            conexao.Open();
-
-                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
-
-                            conexao.Close();
-
-                            DataTable tabela = new DataTable();
-
-                            registros.Fill(tabela);
-
-                            dgvCondominio.DataSource = tabela;
-
-                            if (tabela.Rows.Count > 0)
-                            {
-                                btnCondominioGastosPesquisarImprimir.Visible = true;
-                            }
-                        }
-                        catch (Exception erro)
-                        {
-                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-            else if (rbCondominioHoras.Checked)
-            {
-                if (cbCondominioPesquisar.Text == "Data")
-                {
-                    if (txtCondominioPesquisarAno.Text == "")
-                    {
-                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
-                    {
-                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            CondominioHoras condominio = new CondominioHoras(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
-
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                            SqlCommand pesquisar = new SqlCommand("SELECT horas_trabalhadas_id, membro_nome, horas_trabalhadas, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_horas_trabalhadas INNER JOIN tb_membros ON tb_horas_trabalhadas.horas_trabalhadas_membro = tb_membros.membro_id WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano ORDER BY membro_nome;", conexao);
-
-                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
-                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
-
-                            conexao.Open();
-
-                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
-
-                            conexao.Close();
-
-                            DataTable tabela = new DataTable();
-
-                            registros.Fill(tabela);
-
-                            dgvCondominio.DataSource = tabela;
-                        }
-                        catch (Exception erro)
-                        {
-                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-            else if (rbCondominioMembros.Checked)
-            {
-                if (cbCondominioPesquisar.Text == "Data")
-                {
-                    if (txtCondominioPesquisarAno.Text == "")
-                    {
-                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
-                    {
-                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                    else
-                    {
-                        try
-                        {
-                            CondominioHoras condominio = new CondominioHoras(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
-
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                            SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, horas_trabalhadas, hora_valor, membro_condominio_valor, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_membros_condominio INNER JOIN tb_membros ON tb_membros_condominio.condominio_membro = tb_membros.Membro_id INNER JOIN tb_condominio_hora_valor ON tb_membros_condominio.condominio_hora_valor = tb_condominio_hora_valor.hora_valor_id INNER JOIN tb_horas_trabalhadas ON tb_membros_condominio.membro_horas_trabalhadas = tb_horas_trabalhadas.horas_trabalhadas_id WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano ORDER BY membro_nome;", conexao);
-
-                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
-                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
-
-                            conexao.Open();
-
-                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
-
-                            conexao.Close();
-
-                            DataTable tabela = new DataTable();
-
-                            registros.Fill(tabela);
-
-                            dgvCondominio.DataSource = tabela;
-                        }
-                        catch (Exception erro)
-                        {
-                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                }
-            }
-        }
-
-        private void txtCondominioAno_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8 || txtCondominioAno.Text.Length == 4 && e.KeyChar != 8)
-            {
-                e.Handled = true;
-            }
-        }
-
-        private void cbCondominioMes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cbCondominioNome.SelectedIndex != -1)
-            {
-                cbCondominioNome.SelectedIndex = -1;
-            }
-        }
-
-        private void txtCondominioAno_TextChanged(object sender, EventArgs e)
-        {
-            if (cbCondominioNome.SelectedIndex != -1)
-            {
-                cbCondominioNome.SelectedIndex = -1;
-            }
-        }
-
-        private void cbCondominioNome_DropDown(object sender, EventArgs e)    //Os nomes dos membros da clínica disponíneis serão os que estejam resgistrados como função de 'Psiquiatria e/ou psicologia' e vínculo com a clínica como 'Não sócio' na aba 'Membros da clínica', e tenham pagamentos registrados na aba 'Pagamentos - valor bruto' na data informada
-        {
-            if (cbCondominioMes.Text == "" || txtCondominioAno.Text == "")
-            {
-                MessageBox.Show("Informe o mês e o ano no qual o período trabalhado se refere", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-            else if (Convert.ToDecimal(txtCondominioAno.Text) < 2000 || Convert.ToDecimal(txtCondominioAno.Text) > 2099)
-            {
-                MessageBox.Show("Informe um ano válido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                
-                cbCondominioNome.DataSource = null;
-            }
-            else
-            {
-                try
-                {
-                    PagamentosBruto pagamentos = new PagamentosBruto(cbCondominioMes.Text, txtCondominioAno.Text);
-
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                    SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
-
-                    pesquisar.Parameters.AddWithValue("@mes", pagamentos.Mes);
-                    pesquisar.Parameters.AddWithValue("@ano", pagamentos.Ano);
-
-                    SqlDataAdapter registros2 = new SqlDataAdapter(pesquisar);
-
-                    conexao.Close();
-
-                    DataTable tabela = new DataTable();
-
-                    registros2.Fill(tabela);
-
-                    cbCondominioNome.ValueMember = "membro_id";
-                    cbCondominioNome.DisplayMember = "membro_nome";
-                    cbCondominioNome.DataSource = tabela;
-
-                    if (tabela.Rows.Count == 0)
-                    {
-                        MessageBox.Show("Nenhum pagamento desta data foi informado");
-                    }
-                }
-                catch (Exception erro)
-                {
-                    MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void txtCondominioHorasTrabalhadas_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
-            {
-                e.Handled = true;
-            }
-        }
-
         private void btnCondominioSalvar_Click(object sender, EventArgs e)
         {
             if (rbCondominioHoras.Checked)   //Informar as horas trabalhadas de cada membro da clínica
@@ -2154,13 +2126,15 @@ namespace Contabilidade_clínica
                 {
                     var botao = MessageBox.Show("Confirmar a inserção de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                    SqlConnection conexao = null;
+
                     if (botao == DialogResult.Yes)
                     {
                         try
                         {
                             CondominioHoras condominio = new CondominioHoras(Convert.ToInt32(cbCondominioNome.SelectedValue), Convert.ToInt32(txtCondominioHoras.Text), cbCondominioMes.Text, txtCondominioAno.Text);
 
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                            conexao = new SqlConnection(StringConexao.stringConexao);
 
                             SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_horas_trabalhadas WHERE horas_trabalhadas_membro = @membro AND horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano;", conexao);
 
@@ -2195,7 +2169,7 @@ namespace Contabilidade_clínica
                                 conexao.Close();
 
                                 MessageBox.Show("Informação sobre membro da clínica inserida com sucesso", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                
+
                                 cbCondominioNome.SelectedIndex = -1;
                                 txtCondominioHoras.Clear();
 
@@ -2206,75 +2180,84 @@ namespace Contabilidade_clínica
                         {
                             MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
                     }
                 }
             }
             else if (rbCondominioMembros.Checked)   //Cálculo do valor de condomínio de cada membro da clínica
-            {                
-                 if (cbCondominioMes.Text == "" || txtCondominioAno.Text == "")
-                 {
-                     MessageBox.Show("Preencha todos os campos", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                 }
-                 else if (Convert.ToDecimal(txtCondominioAno.Text) < 2000 || Convert.ToDecimal(txtCondominioAno.Text) > 2099)
-                 {
+            {
+                if (cbCondominioMes.Text == "" || txtCondominioAno.Text == "")
+                {
+                    MessageBox.Show("Preencha todos os campos", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                else if (Convert.ToDecimal(txtCondominioAno.Text) < 2000 || Convert.ToDecimal(txtCondominioAno.Text) > 2099)
+                {
                     MessageBox.Show("Informe um ano válido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                 }
-                 else
-                 {
-                      var botao = MessageBox.Show("Confirmar a inserção de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                }
+                else
+                {
+                    var botao = MessageBox.Show("Confirmar a inserção de dados?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
-                      if (botao == DialogResult.Yes)
-                      {
-                          try
-                          {
-                             CondominioHoras condominioHoras = new CondominioHoras(cbCondominioMes.Text, txtCondominioAno.Text);
+                    SqlConnection conexao = null;
 
-                             SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    if (botao == DialogResult.Yes)
+                    {
+                        try
+                        {
+                            CondominioHoras condominioHoras = new CondominioHoras(cbCondominioMes.Text, txtCondominioAno.Text);
 
-                             SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano", conexao);
+                            conexao = new SqlConnection(StringConexao.stringConexao);
 
-                             pesquisar.Parameters.AddWithValue("@mes", condominioHoras.Mes);
-                             pesquisar.Parameters.AddWithValue("@ano", condominioHoras.Ano);
+                            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano", conexao);
 
-                             conexao.Open();
+                            pesquisar.Parameters.AddWithValue("@mes", condominioHoras.Mes);
+                            pesquisar.Parameters.AddWithValue("@ano", condominioHoras.Ano);
 
-                             SqlDataReader registros = pesquisar.ExecuteReader();
+                            conexao.Open();
 
-                             if (registros.HasRows == false)
-                             {
-                                 MessageBox.Show("Os gastos de condomínio deste mês e ano ainda não foram informados", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            SqlDataReader registros = pesquisar.ExecuteReader();
 
-                                 registros.Close();
-                                 conexao.Close();
-                             }
-                             else
-                             {
-                                 registros.Close();
+                            if (registros.HasRows == false)
+                            {
+                                MessageBox.Show("Os gastos de condomínio deste mês e ano ainda não foram informados", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                                 SqlCommand pesquisarQuantidade = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE NOT membro_funcao = 'Secretaria' AND pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano;", conexao);
+                                registros.Close();
+                                conexao.Close();
+                            }
+                            else
+                            {
+                                registros.Close();
 
-                                 pesquisarQuantidade.Parameters.AddWithValue("@mes", condominioHoras.Mes);
-                                 pesquisarQuantidade.Parameters.AddWithValue("@ano", condominioHoras.Ano);
+                                SqlCommand pesquisarQuantidade = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE NOT membro_funcao = 'Secretaria' AND pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano;", conexao);
 
-                                 int pagamentosQuantidade = Convert.ToInt32(pesquisarQuantidade.ExecuteScalar());
+                                pesquisarQuantidade.Parameters.AddWithValue("@mes", condominioHoras.Mes);
+                                pesquisarQuantidade.Parameters.AddWithValue("@ano", condominioHoras.Ano);
 
-                                 SqlCommand pesquisarQuantidade2 = new SqlCommand("SELECT COUNT(*) FROM tb_horas_trabalhadas WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano;", conexao);
+                                int pagamentosQuantidade = Convert.ToInt32(pesquisarQuantidade.ExecuteScalar());
 
-                                 pesquisarQuantidade2.Parameters.AddWithValue("@mes", condominioHoras.Mes);
-                                 pesquisarQuantidade2.Parameters.AddWithValue("@ano", condominioHoras.Ano);
+                                SqlCommand pesquisarQuantidade2 = new SqlCommand("SELECT COUNT(*) FROM tb_horas_trabalhadas WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano;", conexao);
 
-                                 int horasQuantidade = Convert.ToInt32(pesquisarQuantidade2.ExecuteScalar());
+                                pesquisarQuantidade2.Parameters.AddWithValue("@mes", condominioHoras.Mes);
+                                pesquisarQuantidade2.Parameters.AddWithValue("@ano", condominioHoras.Ano);
 
-                                 if (pagamentosQuantidade != horasQuantidade)
-                                 {
-                                     MessageBox.Show("Faltam informar as horas trabalhadas de alguns membros da clínica deste mês e ano", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                int horasQuantidade = Convert.ToInt32(pesquisarQuantidade2.ExecuteScalar());
 
-                                      conexao.Close();
-                                 }
+                                if (pagamentosQuantidade != horasQuantidade)
+                                {
+                                    MessageBox.Show("Faltam informar as horas trabalhadas de alguns membros da clínica deste mês e ano", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                    conexao.Close();
+                                }
                                 else
-                                {                                                              
-                                    SqlCommand pesquisarCondominioTotal = new SqlCommand("SELECT condominio_id, condominio_valor_total FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano;", conexao);                                
-                                    
+                                {
+                                    SqlCommand pesquisarCondominioTotal = new SqlCommand("SELECT condominio_id, condominio_valor_total FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano;", conexao);
+
                                     pesquisarCondominioTotal.Parameters.AddWithValue("@mes", condominioHoras.Mes);
                                     pesquisarCondominioTotal.Parameters.AddWithValue("@ano", condominioHoras.Ano);
 
@@ -2301,9 +2284,9 @@ namespace Contabilidade_clínica
                                     inserirHoraValor.Parameters.AddWithValue("@mes", condominioHoraValor.Mes);
                                     inserirHoraValor.Parameters.AddWithValue("@ano", condominioHoraValor.Ano);
 
-                                    inserirHoraValor.ExecuteNonQuery();                                 
-                                  
-                                                                  
+                                    inserirHoraValor.ExecuteNonQuery();
+
+
                                     SqlCommand pesquisarHoraValor = new SqlCommand("SELECT hora_valor_id FROM tb_condominio_hora_valor WHERE hora_valor_mes = @mes AND hora_valor_ano = @ano", conexao);
 
                                     pesquisarHoraValor.Parameters.AddWithValue("@mes", condominioGastos.Id);
@@ -2326,7 +2309,7 @@ namespace Contabilidade_clínica
                                     membros.Parameters.AddWithValue("@mes", condominioGastos.Mes);
                                     membros.Parameters.AddWithValue("@ano", condominioGastos.Ano);
 
-                                    SqlDataReader registrosMembros = membros.ExecuteReader();                                    
+                                    SqlDataReader registrosMembros = membros.ExecuteReader();
 
                                     int contador = 0;
 
@@ -2390,17 +2373,335 @@ namespace Contabilidade_clínica
 
                                     TabelaCondominioMembros();
                                 }
-                             }
-                          }
-                          catch (Exception erro)
-                          {
-                              MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                          }
-                      }
-                    
-                 }
+                            }
+                        }
+                        catch (Exception erro)
+                        {
+                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
+                    }
+                }
             }
         }
+
+        private void btnCondominioPesquisar_Click(object sender, EventArgs e)
+        {
+            if (rbCondominioMensal.Checked)
+            {
+                if (cbCondominioPesquisar.Text == "Mês e ano")
+                {
+                    if (cbCondominioPesquisarMes.Text == "" || txtCondominioPesquisarAno.Text == "")
+                    {
+                        MessageBox.Show("Informe todas as informações para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
+                    {
+                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        SqlConnection conexao = null;
+
+                        try
+                        {
+                            CondominioGastos condominio = new CondominioGastos(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
+
+                            conexao = new SqlConnection(StringConexao.stringConexao);
+
+                            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano;", conexao);
+
+                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
+                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
+
+                            conexao.Open();
+
+                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+
+                            conexao.Close();
+
+                            DataTable tabela = new DataTable();
+
+                            registros.Fill(tabela);
+
+                            dgvCondominio.DataSource = tabela;
+
+                            if (tabela.Rows.Count > 0)
+                            {
+                                btnCondominioGastosPesquisarImprimir.Visible = true;
+                            }
+                        }
+                        catch (Exception erro)
+                        {
+                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
+                    }
+                }
+                else if (cbCondominioPesquisar.Text == "Ano")
+                {
+                    if (txtCondominioPesquisarAno.Text == "")
+                    {
+                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
+                    {
+                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        SqlConnection conexao = null;
+
+                        try
+                        {
+                            CondominioGastos condominio = new CondominioGastos(txtCondominioPesquisarAno.Text);
+
+                            conexao = new SqlConnection(StringConexao.stringConexao);
+
+                            SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_ano = @ano ORDER BY condominio_mes;", conexao);
+
+                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
+
+                            conexao.Open();
+
+                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+
+                            conexao.Close();
+
+                            DataTable tabela = new DataTable();
+
+                            registros.Fill(tabela);
+
+                            dgvCondominio.DataSource = tabela;
+
+                            if (tabela.Rows.Count > 0)
+                            {
+                                btnCondominioGastosPesquisarImprimir.Visible = true;
+                            }
+                        }
+                        catch (Exception erro)
+                        {
+                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            else if (rbCondominioHoras.Checked)
+            {
+                if (cbCondominioPesquisar.Text == "Data")
+                {
+                    if (txtCondominioPesquisarAno.Text == "")
+                    {
+                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
+                    {
+                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        SqlConnection conexao = null;
+
+                        try
+                        {
+                            CondominioHoras condominio = new CondominioHoras(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
+
+                            conexao = new SqlConnection(StringConexao.stringConexao);
+
+                            SqlCommand pesquisar = new SqlCommand("SELECT horas_trabalhadas_id, membro_nome, horas_trabalhadas, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_horas_trabalhadas INNER JOIN tb_membros ON tb_horas_trabalhadas.horas_trabalhadas_membro = tb_membros.membro_id WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano ORDER BY membro_nome;", conexao);
+
+                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
+                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
+
+                            conexao.Open();
+
+                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+
+                            conexao.Close();
+
+                            DataTable tabela = new DataTable();
+
+                            registros.Fill(tabela);
+
+                            dgvCondominio.DataSource = tabela;
+                        }
+                        catch (Exception erro)
+                        {
+                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
+                    }
+                }
+            }
+            else if (rbCondominioMembros.Checked)
+            {
+                if (cbCondominioPesquisar.Text == "Data")
+                {
+                    if (txtCondominioPesquisarAno.Text == "")
+                    {
+                        MessageBox.Show("Informe um ano para a pesquisa", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else if (Convert.ToDecimal(txtCondominioPesquisarAno.Text) < 2000 || Convert.ToDecimal(txtCondominioPesquisarAno.Text) > 2099)
+                    {
+                        MessageBox.Show("Informe um ano válido para pesquisar", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    }
+                    else
+                    {
+                        SqlConnection conexao = null;
+
+                        try
+                        {
+                            CondominioHoras condominio = new CondominioHoras(cbCondominioPesquisarMes.Text, txtCondominioPesquisarAno.Text);
+
+                            conexao = new SqlConnection(StringConexao.stringConexao);
+
+                            SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, horas_trabalhadas, hora_valor, membro_condominio_valor, horas_trabalhadas_mes, horas_trabalhadas_ano FROM tb_membros_condominio INNER JOIN tb_membros ON tb_membros_condominio.condominio_membro = tb_membros.Membro_id INNER JOIN tb_condominio_hora_valor ON tb_membros_condominio.condominio_hora_valor = tb_condominio_hora_valor.hora_valor_id INNER JOIN tb_horas_trabalhadas ON tb_membros_condominio.membro_horas_trabalhadas = tb_horas_trabalhadas.horas_trabalhadas_id WHERE horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano ORDER BY membro_nome;", conexao);
+
+                            pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
+                            pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
+
+                            conexao.Open();
+
+                            SqlDataAdapter registros = new SqlDataAdapter(pesquisar);
+
+                            conexao.Close();
+
+                            DataTable tabela = new DataTable();
+
+                            registros.Fill(tabela);
+
+                            dgvCondominio.DataSource = tabela;
+                        }
+                        catch (Exception erro)
+                        {
+                            MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void txtCondominioAno_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8 || txtCondominioAno.Text.Length == 4 && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
+        private void cbCondominioMes_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbCondominioNome.SelectedIndex != -1)
+            {
+                cbCondominioNome.SelectedIndex = -1;
+            }
+        }
+
+        private void txtCondominioAno_TextChanged(object sender, EventArgs e)
+        {
+            if (cbCondominioNome.SelectedIndex != -1)
+            {
+                cbCondominioNome.SelectedIndex = -1;
+            }
+        }
+
+        private void cbCondominioNome_DropDown(object sender, EventArgs e)    //Os nomes dos membros da clínica disponíneis serão os que estejam resgistrados como função de 'Psiquiatria e/ou psicologia' e vínculo com a clínica como 'Não sócio' na aba 'Membros da clínica', e tenham pagamentos registrados na aba 'Pagamentos - valor bruto' na data informada
+        {
+            if (cbCondominioMes.Text == "" || txtCondominioAno.Text == "")
+            {
+                MessageBox.Show("Informe o mês e o ano no qual o período trabalhado se refere", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            else if (Convert.ToDecimal(txtCondominioAno.Text) < 2000 || Convert.ToDecimal(txtCondominioAno.Text) > 2099)
+            {
+                MessageBox.Show("Informe um ano válido", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                
+                cbCondominioNome.DataSource = null;
+            }
+            else
+            {
+                SqlConnection conexao = null;
+
+                try
+                {
+                    PagamentosBruto pagamentos = new PagamentosBruto(cbCondominioMes.Text, txtCondominioAno.Text);
+
+                    conexao = new SqlConnection(StringConexao.stringConexao);
+
+                    SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
+
+                    pesquisar.Parameters.AddWithValue("@mes", pagamentos.Mes);
+                    pesquisar.Parameters.AddWithValue("@ano", pagamentos.Ano);
+
+                    SqlDataAdapter registros2 = new SqlDataAdapter(pesquisar);
+
+                    conexao.Close();
+
+                    DataTable tabela = new DataTable();
+
+                    registros2.Fill(tabela);
+
+                    cbCondominioNome.ValueMember = "membro_id";
+                    cbCondominioNome.DisplayMember = "membro_nome";
+                    cbCondominioNome.DataSource = tabela;
+
+                    if (tabela.Rows.Count == 0)
+                    {
+                        MessageBox.Show("Nenhum pagamento desta data foi informado");
+                    }
+                }
+                catch (Exception erro)
+                {
+                    MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
+            }
+        }
+
+        private void txtCondominioHorasTrabalhadas_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsNumber(e.KeyChar) && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+        }       
 
         private void dgvCondominio_DoubleClick(object sender, EventArgs e)
         {
@@ -2442,9 +2743,11 @@ namespace Contabilidade_clínica
         {
             if (rbCondominioHoras.Checked)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -2475,12 +2778,21 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
             else if (rbCondominioMembros.Checked)
             {
-               try
-               {
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                SqlConnection conexao = null;
+
+                try
+                {
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -2506,11 +2818,18 @@ namespace Contabilidade_clínica
                     registros.Fill(tabela);
 
                     dgvCondominio.DataSource = tabela;
-               }
-               catch (Exception erro)
-               {
+                }
+                catch (Exception erro)
+                {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-               }
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
@@ -2530,11 +2849,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         CondominioHoras condominioHoras = new CondominioHoras(cbCondominioMes.Text, txtCondominioAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_socios WHERE pagamento_mes = ANY (SELECT pagamento_bruto_id FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano);", conexao);
 
@@ -2621,15 +2942,24 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
 
         private void btnCondominioGastosImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_condominio;", conexao);
 
@@ -2883,10 +3213,19 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void btnCondominioGastosPesquisarImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
                 PdfWriter pdf = new PdfWriter("C:\\Clínica Contabilidade\\condominio.pdf");
@@ -3006,7 +3345,7 @@ namespace Contabilidade_clínica
 
                 tabela.AddCell(cabecalhoAno);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -3150,6 +3489,13 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
 
@@ -3158,16 +3504,9 @@ namespace Contabilidade_clínica
 
 
         private void tabAluguel_Enter(object sender, EventArgs e)
-        {
-            try
-            {
-                TabelaAluguel();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+        {          
+            TabelaAluguel();
+           
             if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
             {
                 cbAluguelMes.Text = cbPagamentosBrutoMes.Text;
@@ -3264,11 +3603,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbAluguelMes.Text, txtAluguelAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND membro_relacao_clinica = 'Não sócio' AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
 
@@ -3296,6 +3637,13 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
@@ -3315,11 +3663,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Aluguel aluguel = new Aluguel(Convert.ToInt32(cbAluguelNome.SelectedValue), cbAluguelPeriodo.Text, Convert.ToDecimal(txtAluguelValor.Text), cbAluguelMes.Text, txtAluguelAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_aluguel WHERE aluguel_membro = @membro AND aluguel_mes = @mes AND aluguel_ano = @ano", conexao);
 
@@ -3366,6 +3716,13 @@ namespace Contabilidade_clínica
                     catch (Exception erro)
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
                     }
                 }
             }
@@ -3428,11 +3785,13 @@ namespace Contabilidade_clínica
              }
              else
              {
+                 SqlConnection conexao = null;
+
                  try
                  {
                      Aluguel aluguel = new Aluguel(cbAluguelPesquisarMes.Text, txtAluguelPesquisarAno.Text);
 
-                     SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                     conexao = new SqlConnection(StringConexao.stringConexao);
 
                      SqlCommand pesquisar = new SqlCommand("SELECT aluguel_id, membro_nome, aluguel_periodo, aluguel_valor, aluguel_mes, aluguel_ano FROM tb_aluguel INNER JOIN tb_membros ON tb_aluguel.aluguel_membro = tb_membros.membro_id WHERE aluguel_mes = @mes AND aluguel_ano = @ano ORDER BY membro_nome;", conexao);
 
@@ -3455,14 +3814,23 @@ namespace Contabilidade_clínica
                  {
                      MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                  }
-             }            
+                 finally
+                 {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                 }
+            }            
         }
 
         private void txtAluguelPesquisarNome_TextChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -3492,6 +3860,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
         }
 
@@ -3527,16 +3902,9 @@ namespace Contabilidade_clínica
 
 
         private void tabPagamentosLiquido_Enter(object sender, EventArgs e)
-        {
-            try
-            {
-                TabelaPagamentosLiquido();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-                   
+        {           
+            TabelaPagamentosLiquido();
+                              
             if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
             {
                 cbPagamentoLiquidoMes.Text = cbPagamentosBrutoMes.Text;
@@ -3576,11 +3944,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         PagamentosBruto pagamentosBruto = new PagamentosBruto(cbPagamentoLiquidoMes.Text, txtPagamentoLiquidoAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_socios WHERE pagamento_mes = ANY (SELECT pagamento_bruto_id FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano);", conexao);
 
@@ -3879,6 +4249,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }       
@@ -3895,6 +4272,8 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     var botao = MessageBox.Show("Confirmar a remoção de registros?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
@@ -3903,7 +4282,7 @@ namespace Contabilidade_clínica
                     {
                         PagamentosBruto pagamento = new PagamentosBruto(cbPagamentoLiquidoMes.Text, txtPagamentoLiquidoAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_socios WHERE pagamento_mes = ANY (SELECT pagamento_bruto_id FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano);", conexao);
 
@@ -3984,6 +4363,13 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
@@ -4043,11 +4429,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbPesquisarPagamentoLiquidoMes.Text, txtPesquisarPagamentoLiquidoAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, aluguel_valor, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_nao_socios INNER JOIN tb_membros ON tb_pagamentos_nao_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_nao_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_nao_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_nao_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id INNER JOIN tb_aluguel ON tb_pagamentos_nao_socios.desconto_aluguel = tb_aluguel.aluguel_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano UNION SELECT membro_nome, pagamento_bruto_valor, imposto_valor, membro_condominio_valor, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_socios INNER JOIN tb_membros ON tb_pagamentos_socios.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_socios.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id INNER JOIN tb_impostos ON tb_pagamentos_socios.desconto_imposto = tb_impostos.imposto_id INNER JOIN tb_membros_condominio ON tb_pagamentos_socios.desconto_condominio = tb_membros_condominio.membro_condominio_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano UNION SELECT membro_nome, pagamento_bruto_valor, desconto_imposto, desconto_condominio, desconto_aluguel, pagamento_valor, pagamento_bruto_mes, pagamento_bruto_ano FROM tb_pagamentos_secretaria INNER JOIN tb_membros ON tb_pagamentos_secretaria.pagamento_membro = tb_membros.membro_id INNER JOIN tb_pagamentos_valor_bruto ON tb_pagamentos_secretaria.pagamento_valor_bruto = tb_pagamentos_valor_bruto.pagamento_bruto_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano ORDER BY membro_nome;", conexao);
 
@@ -4074,6 +4462,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }
@@ -4108,9 +4503,11 @@ namespace Contabilidade_clínica
 
         private void txtPesquisarPagamentoLiquidoNome_TextChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -4150,13 +4547,22 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void btnPagamentosLiquidoImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_pagamentos_socios;", conexao);
 
@@ -4337,10 +4743,19 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void btnPagamentosLiquidoPesquisarImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
                 PdfWriter pdf = new PdfWriter("C:\\Clínica Contabilidade\\pagamentos.pdf");
@@ -4406,7 +4821,7 @@ namespace Contabilidade_clínica
 
                 tabela.AddCell(cabecalhoAno);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -4521,7 +4936,14 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }                     
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
 
@@ -4530,17 +4952,9 @@ namespace Contabilidade_clínica
 
 
         private void tabEscritorio_Enter(object sender, EventArgs e)
-        {
-            try
-            {
-                TabelaEscritorio();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            
+        {           
+           TabelaEscritorio();
+                     
            cbPesquisarEscritorio.SelectedIndex = -1;          
            cbPesquisarEscritorioMes.SelectedIndex = -1;          
            cbPesquisarEscritorioMes.Visible = false;         
@@ -4633,11 +5047,13 @@ namespace Contabilidade_clínica
                 }
                 else
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Escritorio escritorio = new Escritorio(cbPesquisarEscritorioMes.Text, txtPesquisarEscritorioAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio WHERE escritorio_mes = @mes AND escritorio_ano = @ano;", conexao);
 
@@ -4660,6 +5076,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
             else if (cbPesquisarEscritorio.Text == "Ano")
@@ -4674,11 +5097,13 @@ namespace Contabilidade_clínica
                 }
                 else
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Escritorio escritorio = new Escritorio(cbPesquisarEscritorioMes.Text, txtPesquisarEscritorioAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio WHERE escritorio_ano = @ano ORDER BY escritorio_mes", conexao);
                         
@@ -4700,6 +5125,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -4711,15 +5143,8 @@ namespace Contabilidade_clínica
         
         private void tabConvenios_Enter(object sender, EventArgs e)
         {
-            try
-            {
-                TabelaConvenios();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+            TabelaConvenios();
+            
             if (txtConvenioAba.Text == "parte2")
             {
                 rbConveniosValores.Checked = true;
@@ -4757,15 +5182,8 @@ namespace Contabilidade_clínica
 
         private void rbConvenios_CheckedChanged(object sender, EventArgs e)
         {
-            try
-            {
-                TabelaConvenios();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
+            
+            TabelaConvenios();
 
             lblConvenios.Visible = true;
             lblConveniosValores.Visible = false;
@@ -4799,16 +5217,8 @@ namespace Contabilidade_clínica
 
         private void rbConveniosValores_CheckedChanged(object sender, EventArgs e)
         {
-            try
-            {
-                TabelaConveniosValores();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
+            TabelaConveniosValores();
+            
             lblConvenios.Visible = false;
             lblConveniosValores.Visible = true;
 
@@ -4993,9 +5403,11 @@ namespace Contabilidade_clínica
 
         private void cbConvenios_DropDown(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios ORDER BY convenio_nome;", conexao);
 
@@ -5017,6 +5429,13 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void btnConvenioSalvar_Click(object sender, EventArgs e)
@@ -5033,11 +5452,13 @@ namespace Contabilidade_clínica
 
                     if (botao == DialogResult.Yes)
                     {
+                        SqlConnection conexao = null;
+
                         try
                         {
                             Convenio convenio = new Convenio(txtConvenio.Text);
 
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                            conexao = new SqlConnection(StringConexao.stringConexao);
 
                             SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios WHERE convenio_nome = @convenio", conexao);
 
@@ -5077,6 +5498,13 @@ namespace Contabilidade_clínica
                         {
                             MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
                     }
                 }
             }
@@ -5094,6 +5522,8 @@ namespace Contabilidade_clínica
                 {
                     var botao = MessageBox.Show("Confirmar inserção de pagamento de convênio?", "Atenção", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
 
+                    SqlConnection conexao = null;
+
                     if (botao == DialogResult.Yes)
                     {
                         try
@@ -5106,7 +5536,7 @@ namespace Contabilidade_clínica
 
                             Convenio convenio = new Convenio(Convert.ToInt32(cbConvenios.SelectedValue), Convert.ToDecimal(txtConvenioValor.Text), Convert.ToDecimal(txtConvenioGlosa.Text), Convert.ToDecimal(txtConvenioDesconto.Text), calculo1 - calculo3, cbConvenioMes.Text, txtConvenioAno.Text);
 
-                            SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                            conexao = new SqlConnection(StringConexao.stringConexao);
 
                             SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios_valores WHERE convenio = @convenio AND convenio_valor_mes = @mes AND convenio_valor_ano = @ano", conexao);
 
@@ -5176,6 +5606,13 @@ namespace Contabilidade_clínica
                         {
                             MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
+                        finally
+                        {
+                            if (conexao != null && conexao.State != ConnectionState.Closed)
+                            {
+                                conexao.Close();
+                            }
+                        }
                     }
                 }
             }           
@@ -5243,9 +5680,11 @@ namespace Contabilidade_clínica
 
         private void cbPesquisarConvenio_DropDown(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios;", conexao);
 
@@ -5266,6 +5705,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
         }
 
@@ -5289,11 +5735,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Convenio convenio = new Convenio(cbConvenioPesquisarMes.Text, txtConvenioPesquisarAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT convenio_valor_id, convenio_nome, convenio_valor_inicial, convenio_valor_glosa, convenio_valor_desconto, convenio_valor_final, convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores INNER JOIN tb_convenios ON tb_convenios_valores.convenio = tb_convenios.convenio_id WHERE convenio_valor_mes = @mes AND convenio_valor_ano = @ano ORDER BY convenio_nome;", conexao);
 
@@ -5316,16 +5764,25 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
         private void cbPesquisarConvenio_SelectedIndexChanged(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
                 Convenio convenio = new Convenio(cbPesquisarConvenio.Text);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT convenio_valor_id, convenio_nome, convenio_valor_inicial, convenio_valor_glosa, convenio_valor_desconto, convenio_valor_final, convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores INNER JOIN tb_convenios ON tb_convenios_valores.convenio = tb_convenios.convenio_id WHERE convenio_nome = @convenio ORDER BY convenio_valor_ano, convenio_valor_mes, convenio_nome;", conexao);
 
@@ -5347,6 +5804,13 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
 
@@ -5356,16 +5820,8 @@ namespace Contabilidade_clínica
 
         private void tabSaldo_Enter(object sender, EventArgs e)
         {
-            try
-            {
-                TabelaSaldos();
-            }
-            catch (Exception erro)
-            {
-                MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-
+            TabelaSaldos();
+          
             if (cbPagamentosBrutoMes.Text != "" && txtPagamentosBrutoAno.Text != "")
             {
                 cbSaldoMes.Text = cbPagamentosBrutoMes.Text;
@@ -5415,11 +5871,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Saldo saldo = new Saldo(cbSaldoMes.Text, txtSaldoAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_saldos WHERE saldo_mes = @mes AND saldo_ano = @ano;", conexao);
 
@@ -5579,6 +6037,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -5591,11 +6056,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Saldo saldo = new Saldo(Convert.ToInt32(dgvSaldo.SelectedRows[0].Cells[0].Value));
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand deletar = new SqlCommand("DELETE FROM tb_saldos WHERE saldo_id = @id", conexao);
 
@@ -5615,6 +6082,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -5633,11 +6107,13 @@ namespace Contabilidade_clínica
                 }
                 else
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Saldo saldo = new Saldo(cbSaldoPesquisarMes.Text, txtSaldoPesquisarAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT saldo_id, saldo_valor_inicial, escritorio_total, pagamentos_valor, saldo_valor, saldo_mes, saldo_ano FROM tb_saldos INNER JOIN tb_escritorio ON tb_saldos.escritorio_valor = tb_escritorio.escritorio_id WHERE saldo_mes = @mes AND saldo_ano = @ano;", conexao);
 
@@ -5665,6 +6141,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
             else if (cbSaldoPesquisar.Text == "Ano")
@@ -5679,11 +6162,13 @@ namespace Contabilidade_clínica
                 }
                 else
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Saldo saldo = new Saldo(txtSaldoPesquisarAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT saldo_id, saldo_valor_inicial, escritorio_total, pagamentos_valor, saldo_valor, saldo_mes, saldo_ano FROM tb_saldos INNER JOIN tb_escritorio ON tb_saldos.escritorio_valor = tb_escritorio.escritorio_id WHERE saldo_ano = @ano ORDER BY saldo_mes;", conexao);
                         
@@ -5709,6 +6194,13 @@ namespace Contabilidade_clínica
                     catch (Exception erro)
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
                     }
                 }
             }
@@ -5759,9 +6251,11 @@ namespace Contabilidade_clínica
 
         private void btnSaldoImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT COUNT(*) FROM tb_saldos;", conexao);
 
@@ -5886,11 +6380,20 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }            
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
         }
 
         private void btnSaldoPesquisarImprimir_Click(object sender, EventArgs e)
         {
+            SqlConnection conexao = null;
+
             try
             {
                 PdfWriter pdf = new PdfWriter("C:\\Clínica Contabilidade\\saldo.pdf");
@@ -5945,7 +6448,7 @@ namespace Contabilidade_clínica
 
                 tabela.AddCell(cabecalhoAno);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = conexao.CreateCommand();
 
@@ -6024,6 +6527,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
         }      
     }    

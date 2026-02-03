@@ -23,14 +23,64 @@ namespace Contabilidade_clínica
             set { txtContabilidadeAno.Text = value; }
         }
 
+        private void txtPagamentosBrutoValor_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtPagamentosBrutoValor.Text == "")
+            {
+                if (!char.IsDigit(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (txtPagamentosBrutoValor.Text.Contains(','))
+            {
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
+                {
+                    e.Handled = true;
+                }
+
+                if (txtPagamentosBrutoValor.Text.Substring(txtPagamentosBrutoValor.Text.IndexOf(',')).Length == 3)
+                {
+                    if (e.KeyChar != 8)
+                    {
+                        e.Handled = true;
+                    }
+                }
+            }
+            else if (txtPagamentosBrutoValor.Text == "0")
+            {
+                if (e.KeyChar != ',' && e.KeyChar != 8)
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != 8)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void txtPagamentosBrutoAno_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8 || txtPagamentosBrutoAno.Text.Length == 4 && e.KeyChar != 8)
+            {
+                e.Handled = true;
+            }
+        }
+
 
         public frmPagamentosBrutoAlterarDeletar(string membro, string valor, string mes, string ano, string id)
         {
             InitializeComponent();
 
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_membros WHERE membro_situacao = 'Ativa' ORDER BY membro_nome;", conexao);
 
@@ -51,6 +101,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
 
 
@@ -77,11 +134,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         PagamentosBruto pagamentos = new PagamentosBruto(Convert.ToInt32(cbPagamentosBrutoMembros.SelectedValue), Convert.ToDecimal(txtPagamentosBrutoValor.Text), cbPagamentosBrutoMes.Text, txtPagamentosBrutoAno.Text, Convert.ToInt32(txtId.Text));
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);                                                 
+                        conexao = new SqlConnection(StringConexao.stringConexao);                                                 
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_membro = @membro AND pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT pagamento_bruto_id = @id;", conexao);
 
@@ -144,6 +203,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -169,11 +235,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_impostos WHERE pagamento_mensal_bruto = @id;", conexao);
 
@@ -211,56 +279,15 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-        }
-
-        private void txtPagamentosBrutoValor_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (txtPagamentosBrutoValor.Text == "")
-            {
-                if (!char.IsDigit(e.KeyChar))
+                finally
                 {
-                    e.Handled = true;
-                }
-            }
-            else if (txtPagamentosBrutoValor.Text.Contains(','))
-            {
-                if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8)
-                {
-                    e.Handled = true;
-                }
-
-                if (txtPagamentosBrutoValor.Text.Substring(txtPagamentosBrutoValor.Text.IndexOf(',')).Length == 3)
-                {
-                    if (e.KeyChar != 8)
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
                     {
-                        e.Handled = true;
+                        conexao.Close();
                     }
                 }
             }
-            else if (txtPagamentosBrutoValor.Text == "0")
-            {
-                if (e.KeyChar != ',' && e.KeyChar != 8)
-                {
-                    e.Handled = true;
-                }
-            }
-            else
-            {
-                if (!char.IsDigit(e.KeyChar) && e.KeyChar != ',' && e.KeyChar != 8)
-                {
-                    e.Handled = true;
-                }
-            }
-        }
-
-        private void txtPagamentosBrutoAno_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (!char.IsDigit(e.KeyChar) && e.KeyChar != 8 || txtPagamentosBrutoAno.Text.Length == 4 && e.KeyChar != 8)
-            {
-                e.Handled = true;
-            }
-        }
+        }        
     }
 }
     

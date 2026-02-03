@@ -477,11 +477,13 @@ namespace Contabilidade_clínica
 
                  if (botao == DialogResult.Yes)
                  {
-                     try
-                     {
+                    SqlConnection conexao = null;
+
+                    try
+                    {
                         Escritorio escritorio = new Escritorio(Convert.ToDecimal(txtPis.Text), Convert.ToDecimal(txtCofins.Text), Convert.ToDecimal(txtIss.Text), Convert.ToDecimal(txtInss.Text), Convert.ToDecimal(txtIr.Text), Convert.ToDecimal(txtCs.Text), Convert.ToDecimal(txtCiee.Text), Convert.ToDecimal(txtAluguel.Text), Convert.ToDecimal(txtEscritorio.Text), Convert.ToDecimal(txtPis.Text) + Convert.ToDecimal(txtCofins.Text) + Convert.ToDecimal(txtIss.Text) + Convert.ToDecimal(txtInss.Text) + Convert.ToDecimal(txtIr.Text) + Convert.ToDecimal(txtCs.Text) + Convert.ToDecimal(txtCiee.Text) + Convert.ToDecimal(txtAluguel.Text) + Convert.ToDecimal(txtEscritorio.Text), cbMes.Text, txtAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio WHERE escritorio_mes = @mes AND escritorio_ano = @ano;", conexao);
 
@@ -526,13 +528,20 @@ namespace Contabilidade_clínica
 
                             this.Close();
                         }
-                     }
-                     catch (Exception erro)
-                     {
+                    }
+                    catch (Exception erro)
+                    {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
 
-                 }                             
+                }                             
             }
         }
 
@@ -552,11 +561,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Escritorio escritorio = new Escritorio(Convert.ToInt32(txtId.Text), Convert.ToDecimal(txtPis.Text), Convert.ToDecimal(txtCofins.Text), Convert.ToDecimal(txtIss.Text), Convert.ToDecimal(txtInss.Text), Convert.ToDecimal(txtIr.Text), Convert.ToDecimal(txtCs.Text), Convert.ToDecimal(txtCiee.Text), Convert.ToDecimal(txtEscritorio.Text), Convert.ToDecimal(txtEscritorio.Text), Convert.ToDecimal(txtPis.Text) + Convert.ToDecimal(txtCofins.Text) + Convert.ToDecimal(txtIss.Text) + Convert.ToDecimal(txtInss.Text) + Convert.ToDecimal(txtIr.Text) + Convert.ToDecimal(txtCs.Text) + Convert.ToDecimal(txtCiee.Text) + Convert.ToDecimal(txtAluguel.Text) + Convert.ToDecimal(txtEscritorio.Text), cbMes.Text, txtAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_escritorio WHERE escritorio_mes = @mes AND escritorio_ano = @ano AND NOT escritorio_id = @id", conexao);
 
@@ -625,7 +636,14 @@ namespace Contabilidade_clínica
                     catch (Exception erro)
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }              
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -636,11 +654,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Escritorio escritorio = new Escritorio(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_saldos WHERE escritorio_valor = @id;", conexao);
 
@@ -677,6 +697,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }       

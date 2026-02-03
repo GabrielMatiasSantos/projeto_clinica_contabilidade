@@ -680,11 +680,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         CondominioGastos condominio = new CondominioGastos(Convert.ToDecimal(txtCpfl.Text), Convert.ToDecimal(txtSanebavi.Text), Convert.ToDecimal(txtVivo.Text), Convert.ToDecimal(txtCorreio.Text), Convert.ToDecimal(txtAguaParaBeber.Text), Convert.ToDecimal(txtCopos.Text), Convert.ToDecimal(txtPapelHigienico.Text), Convert.ToDecimal(txtPapelToalha.Text), Convert.ToDecimal(txtCafe.Text), Convert.ToDecimal(txtAcucar.Text), Convert.ToDecimal(txtProdutosLimpeza.Text), Convert.ToDecimal(txtFaxina.Text), Convert.ToDecimal(txtRecargaCelular.Text), Convert.ToDecimal(txtOutros.Text), Convert.ToDecimal(txtCpfl.Text) + Convert.ToDecimal(txtSanebavi.Text) + Convert.ToDecimal(txtVivo.Text) + Convert.ToDecimal(txtCorreio.Text) + Convert.ToDecimal(txtAguaParaBeber.Text) + Convert.ToDecimal(txtCopos.Text) + Convert.ToDecimal(txtPapelHigienico.Text) + Convert.ToDecimal(txtPapelToalha.Text) + Convert.ToDecimal(txtCafe.Text) + Convert.ToDecimal(txtAcucar.Text) + Convert.ToDecimal(txtProdutosLimpeza.Text) + Convert.ToDecimal(txtFaxina.Text) + Convert.ToDecimal(txtRecargaCelular.Text) + Convert.ToDecimal(txtOutros.Text), cbMes.Text, txtAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano;", conexao);
 
@@ -739,6 +741,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -759,78 +768,94 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
-                    CondominioGastos condominio = new CondominioGastos(Convert.ToInt32(txtId.Text), Convert.ToDecimal(txtCpfl.Text), Convert.ToDecimal(txtSanebavi.Text), Convert.ToDecimal(txtVivo.Text), Convert.ToDecimal(txtCorreio.Text), Convert.ToDecimal(txtAguaParaBeber.Text), Convert.ToDecimal(txtCopos.Text), Convert.ToDecimal(txtPapelHigienico.Text), Convert.ToDecimal(txtPapelToalha.Text), Convert.ToDecimal(txtCafe.Text), Convert.ToDecimal(txtAcucar.Text), Convert.ToDecimal(txtProdutosLimpeza.Text), Convert.ToDecimal(txtFaxina.Text), Convert.ToDecimal(txtRecargaCelular.Text), Convert.ToDecimal(txtOutros.Text), Convert.ToDecimal(txtCpfl.Text) + Convert.ToDecimal(txtSanebavi.Text) + Convert.ToDecimal(txtVivo.Text) + Convert.ToDecimal(txtCorreio.Text) + Convert.ToDecimal(txtAguaParaBeber.Text) + Convert.ToDecimal(txtCopos.Text) + Convert.ToDecimal(txtPapelHigienico.Text) + Convert.ToDecimal(txtPapelToalha.Text) + Convert.ToDecimal(txtCafe.Text) + Convert.ToDecimal(txtAcucar.Text) + Convert.ToDecimal(txtProdutosLimpeza.Text) + Convert.ToDecimal(txtFaxina.Text) + Convert.ToDecimal(txtRecargaCelular.Text) + Convert.ToDecimal(txtOutros.Text), cbMes.Text, txtAno.Text);
+                    SqlConnection conexao = null;
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                    SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano AND NOT condominio_id = @id", conexao);
-
-                    pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
-                    pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
-                    pesquisar.Parameters.AddWithValue("@id", condominio.Id);
-
-                    conexao.Open();
-
-                    SqlDataReader registros = pesquisar.ExecuteReader();
-
-                    if (registros.HasRows)
+                    try
                     {
-                        MessageBox.Show("Os gastos de condomínio deste mês e ano já foram informados", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        CondominioGastos condominio = new CondominioGastos(Convert.ToInt32(txtId.Text), Convert.ToDecimal(txtCpfl.Text), Convert.ToDecimal(txtSanebavi.Text), Convert.ToDecimal(txtVivo.Text), Convert.ToDecimal(txtCorreio.Text), Convert.ToDecimal(txtAguaParaBeber.Text), Convert.ToDecimal(txtCopos.Text), Convert.ToDecimal(txtPapelHigienico.Text), Convert.ToDecimal(txtPapelToalha.Text), Convert.ToDecimal(txtCafe.Text), Convert.ToDecimal(txtAcucar.Text), Convert.ToDecimal(txtProdutosLimpeza.Text), Convert.ToDecimal(txtFaxina.Text), Convert.ToDecimal(txtRecargaCelular.Text), Convert.ToDecimal(txtOutros.Text), Convert.ToDecimal(txtCpfl.Text) + Convert.ToDecimal(txtSanebavi.Text) + Convert.ToDecimal(txtVivo.Text) + Convert.ToDecimal(txtCorreio.Text) + Convert.ToDecimal(txtAguaParaBeber.Text) + Convert.ToDecimal(txtCopos.Text) + Convert.ToDecimal(txtPapelHigienico.Text) + Convert.ToDecimal(txtPapelToalha.Text) + Convert.ToDecimal(txtCafe.Text) + Convert.ToDecimal(txtAcucar.Text) + Convert.ToDecimal(txtProdutosLimpeza.Text) + Convert.ToDecimal(txtFaxina.Text) + Convert.ToDecimal(txtRecargaCelular.Text) + Convert.ToDecimal(txtOutros.Text), cbMes.Text, txtAno.Text);
 
-                        registros.Close();
-                        conexao.Close();
-                    }
-                    else
-                    {
-                        registros.Close();
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
-                        SqlCommand pesquisar2 = new SqlCommand("SELECT * FROM tb_condominio_hora_valor WHERE condominio_total = @id;", conexao);
+                        SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio WHERE condominio_mes = @mes AND condominio_ano = @ano AND NOT condominio_id = @id", conexao);
 
-                        pesquisar2.Parameters.AddWithValue("@id", condominio.Id);
+                        pesquisar.Parameters.AddWithValue("@mes", condominio.Mes);
+                        pesquisar.Parameters.AddWithValue("@ano", condominio.Ano);
+                        pesquisar.Parameters.AddWithValue("@id", condominio.Id);
 
-                        SqlDataReader registros2 = pesquisar2.ExecuteReader();
+                        conexao.Open();
 
-                        if (registros2.HasRows)
+                        SqlDataReader registros = pesquisar.ExecuteReader();
+
+                        if (registros.HasRows)
                         {
-                            MessageBox.Show("Registros na tabela de valores de condomínio dos membros da clínica estão fazendo uso destas informações. Apague-os para poder fazer uma alteração neste registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("Os gastos de condomínio deste mês e ano já foram informados", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            registros2.Close();
+                            registros.Close();
                             conexao.Close();
                         }
                         else
                         {
-                            registros2.Close();
+                            registros.Close();
 
-                            SqlCommand alterar = new SqlCommand("UPDATE tb_condominio SET condominio_cpfl = @cpfl, condominio_sanebavi = @sanebavi, condominio_vivo = @vivo, condominio_correio = @correio, condominio_agua_para_beber = @aguaBeber, condominio_copos = @copos, condominio_papel_higienico = @papelHigienico, condominio_papel_toalha = @papelToalha, condominio_cafe = @cafe, condominio_acucar = @acucar, condominio_produtos_limpeza = @produtosLimpeza, condominio_faxina = @faxina, condominio_recarga_celular = @recargaCelular, condominio_outros = @outros, condominio_valor_total = @total, condominio_mes = @mes, condominio_ano = @ano WHERE condominio_id = @id;", conexao);
+                            SqlCommand pesquisar2 = new SqlCommand("SELECT * FROM tb_condominio_hora_valor WHERE condominio_total = @id;", conexao);
 
-                            alterar.Parameters.AddWithValue("@cpfl", condominio.Cpfl);
-                            alterar.Parameters.AddWithValue("@sanebavi", condominio.Sanebavi);
-                            alterar.Parameters.AddWithValue("@vivo", condominio.Vivo);
-                            alterar.Parameters.AddWithValue("@correio", condominio.Correio);
-                            alterar.Parameters.AddWithValue("@aguaBeber", condominio.AguaBeber);
-                            alterar.Parameters.AddWithValue("@copos", condominio.Copos);
-                            alterar.Parameters.AddWithValue("@papelHigienico", condominio.PapelHigienico);
-                            alterar.Parameters.AddWithValue("@papelToalha", condominio.PapelToalha);
-                            alterar.Parameters.AddWithValue("@cafe", condominio.Cafe);
-                            alterar.Parameters.AddWithValue("@acucar", condominio.Acucar);
-                            alterar.Parameters.AddWithValue("@produtosLimpeza", condominio.ProdutosLimpeza);
-                            alterar.Parameters.AddWithValue("@faxina", condominio.Faxina);
-                            alterar.Parameters.AddWithValue("@recargaCelular", condominio.RecargaCelular);
-                            alterar.Parameters.AddWithValue("@outros", condominio.Outros);
-                            alterar.Parameters.AddWithValue("@total", condominio.Total);
-                            alterar.Parameters.AddWithValue("@mes", condominio.Mes);
-                            alterar.Parameters.AddWithValue("@ano", condominio.Ano);
-                            alterar.Parameters.AddWithValue("@id", condominio.Id);
+                            pesquisar2.Parameters.AddWithValue("@id", condominio.Id);
 
-                            alterar.ExecuteNonQuery();
+                            SqlDataReader registros2 = pesquisar2.ExecuteReader();
 
-                            conexao.Close();
+                            if (registros2.HasRows)
+                            {
+                                MessageBox.Show("Registros na tabela de valores de condomínio dos membros da clínica estão fazendo uso destas informações. Apague-os para poder fazer uma alteração neste registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            MessageBox.Show("Inserção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                registros2.Close();
+                                conexao.Close();
+                            }
+                            else
+                            {
+                                registros2.Close();
 
-                            this.Close();
-                        }                      
+                                SqlCommand alterar = new SqlCommand("UPDATE tb_condominio SET condominio_cpfl = @cpfl, condominio_sanebavi = @sanebavi, condominio_vivo = @vivo, condominio_correio = @correio, condominio_agua_para_beber = @aguaBeber, condominio_copos = @copos, condominio_papel_higienico = @papelHigienico, condominio_papel_toalha = @papelToalha, condominio_cafe = @cafe, condominio_acucar = @acucar, condominio_produtos_limpeza = @produtosLimpeza, condominio_faxina = @faxina, condominio_recarga_celular = @recargaCelular, condominio_outros = @outros, condominio_valor_total = @total, condominio_mes = @mes, condominio_ano = @ano WHERE condominio_id = @id;", conexao);
+
+                                alterar.Parameters.AddWithValue("@cpfl", condominio.Cpfl);
+                                alterar.Parameters.AddWithValue("@sanebavi", condominio.Sanebavi);
+                                alterar.Parameters.AddWithValue("@vivo", condominio.Vivo);
+                                alterar.Parameters.AddWithValue("@correio", condominio.Correio);
+                                alterar.Parameters.AddWithValue("@aguaBeber", condominio.AguaBeber);
+                                alterar.Parameters.AddWithValue("@copos", condominio.Copos);
+                                alterar.Parameters.AddWithValue("@papelHigienico", condominio.PapelHigienico);
+                                alterar.Parameters.AddWithValue("@papelToalha", condominio.PapelToalha);
+                                alterar.Parameters.AddWithValue("@cafe", condominio.Cafe);
+                                alterar.Parameters.AddWithValue("@acucar", condominio.Acucar);
+                                alterar.Parameters.AddWithValue("@produtosLimpeza", condominio.ProdutosLimpeza);
+                                alterar.Parameters.AddWithValue("@faxina", condominio.Faxina);
+                                alterar.Parameters.AddWithValue("@recargaCelular", condominio.RecargaCelular);
+                                alterar.Parameters.AddWithValue("@outros", condominio.Outros);
+                                alterar.Parameters.AddWithValue("@total", condominio.Total);
+                                alterar.Parameters.AddWithValue("@mes", condominio.Mes);
+                                alterar.Parameters.AddWithValue("@ano", condominio.Ano);
+                                alterar.Parameters.AddWithValue("@id", condominio.Id);
+
+                                alterar.ExecuteNonQuery();
+
+                                conexao.Close();
+
+                                MessageBox.Show("Inserção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
+                        }
                     }
+                    catch (Exception erro)
+                    {
+                        MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }                   
                 }
             }
         }
@@ -841,11 +866,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     CondominioGastos condominio = new CondominioGastos(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_condominio_hora_valor WHERE condominio_total = @id;", conexao);
 
@@ -882,6 +909,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }

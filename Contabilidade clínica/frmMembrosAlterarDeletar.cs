@@ -34,6 +34,23 @@ namespace Contabilidade_clínica
             set { txtContabilidadeAno.Text = value; }
         }
 
+        private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (txtNome.Text == "")
+            {
+                if (!char.IsLetter(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else
+            {
+                if (!char.IsLetter(e.KeyChar) && e.KeyChar != 8 && e.KeyChar != 32)
+                {
+                    e.Handled = true;
+                }
+            }
+        }
 
         private void btnAlterar_Click(object sender, EventArgs e)
         {
@@ -47,11 +64,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Membros membros = new Membros(txtNome.Text, cbFuncao.Text, cbRelacao.Text, cbSituacao.Text, Convert.ToInt32(txtId.Text));
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT membro_nome FROM tb_membros WHERE membro_nome = @nome AND NOT membro_id = @id", conexao);
 
@@ -94,6 +113,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -119,11 +145,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Membros membros = new Membros(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_pagamentos_valor_bruto WHERE pagamento_bruto_membro = @id;", conexao);
 
@@ -161,25 +189,14 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-            }
-        }
-
-        private void txtNome_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (txtNome.Text == "")             
-            {
-                if (!char.IsLetter(e.KeyChar))
+                finally
                 {
-                    e.Handled = true;
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
-            else
-            {
-                if (!char.IsLetter(e.KeyChar) && e.KeyChar != 8 && e.KeyChar != 32)    
-                {
-                    e.Handled = true;
-                }
-            }
-        }
+        }        
     }
 }

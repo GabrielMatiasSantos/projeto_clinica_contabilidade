@@ -28,9 +28,11 @@ namespace Contabilidade_clínica
         {
             InitializeComponent();
 
+            SqlConnection conexao = null;
+
             try
             {
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios ORDER BY convenio_nome;", conexao);
 
@@ -51,6 +53,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
 
             cbConvenios.Text = convenio;
@@ -231,90 +240,105 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
-                    decimal calculo1 = Convert.ToDecimal(txtConvenioValor.Text) - Convert.ToDecimal(txtConvenioGlosa.Text);
+                    SqlConnection conexao = null;
 
-                    decimal calculo2 = Convert.ToDecimal(txtConvenioDesconto.Text) / 100;
-
-                    decimal calculo3 = calculo1 * calculo2;
-
-                    Convenio convenio = new Convenio(Convert.ToInt32(txtId.Text), Convert.ToInt32(cbConvenios.SelectedValue), Convert.ToDecimal(txtConvenioValor.Text), Convert.ToDecimal(txtConvenioGlosa.Text), Convert.ToDecimal(txtConvenioDesconto.Text), calculo1 - calculo3, cbConvenioMes.Text, txtConvenioAno.Text);
-
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                    SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios_valores WHERE convenio = @convenio AND convenio_valor_mes = @mes AND convenio_valor_ano = @ano AND NOT convenio_valor_id = @id", conexao);
-
-                    pesquisar.Parameters.AddWithValue("@convenio", convenio.Convenio2);
-                    pesquisar.Parameters.AddWithValue("@mes", convenio.Mes);
-                    pesquisar.Parameters.AddWithValue("@ano", convenio.Ano);
-                    pesquisar.Parameters.AddWithValue("@id", convenio.Id);
-
-                    conexao.Open();
-
-                    SqlDataReader registros = pesquisar.ExecuteReader();
-
-                    if (registros.HasRows)
+                    try
                     {
-                        MessageBox.Show("O pagamento deste convênio deste mês e ano já foi informado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        decimal calculo1 = Convert.ToDecimal(txtConvenioValor.Text) - Convert.ToDecimal(txtConvenioGlosa.Text);
 
-                        registros.Close();
-                        conexao.Close();
-                    }
-                    else
-                    {
-                        registros.Close();
+                        decimal calculo2 = Convert.ToDecimal(txtConvenioDesconto.Text) / 100;
 
-                        SqlCommand pesquisar2 = new SqlCommand("SELECT convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores WHERE convenio_valor_id = @id;", conexao);
+                        decimal calculo3 = calculo1 * calculo2;
 
-                        pesquisar2.Parameters.AddWithValue("@id", convenio.Id);
+                        Convenio convenio = new Convenio(Convert.ToInt32(txtId.Text), Convert.ToInt32(cbConvenios.SelectedValue), Convert.ToDecimal(txtConvenioValor.Text), Convert.ToDecimal(txtConvenioGlosa.Text), Convert.ToDecimal(txtConvenioDesconto.Text), calculo1 - calculo3, cbConvenioMes.Text, txtConvenioAno.Text);
 
-                        SqlDataReader registros2 = pesquisar2.ExecuteReader();
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
-                        registros2.Read();
-                        
-                        string mes = registros2["convenio_valor_mes"].ToString();
-                        string ano = registros2["convenio_valor_ano"].ToString();                        
+                        SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_convenios_valores WHERE convenio = @convenio AND convenio_valor_mes = @mes AND convenio_valor_ano = @ano AND NOT convenio_valor_id = @id", conexao);
 
-                        registros2.Close();
+                        pesquisar.Parameters.AddWithValue("@convenio", convenio.Convenio2);
+                        pesquisar.Parameters.AddWithValue("@mes", convenio.Mes);
+                        pesquisar.Parameters.AddWithValue("@ano", convenio.Ano);
+                        pesquisar.Parameters.AddWithValue("@id", convenio.Id);
 
-                        SqlCommand pesquisar3 = new SqlCommand("SELECT * FROM tb_saldos WHERE saldo_mes = @mes AND saldo_ano = @ano;", conexao);
+                        conexao.Open();
 
-                        pesquisar3.Parameters.AddWithValue("@mes", mes);
-                        pesquisar3.Parameters.AddWithValue("@ano", ano);
+                        SqlDataReader registros = pesquisar.ExecuteReader();
 
-                        SqlDataReader registros3 = pesquisar3.ExecuteReader();                        
-
-                        if (registros3.HasRows)
+                        if (registros.HasRows)
                         {
-                            MessageBox.Show("Um registro na tabela de saldos está fazendo uso desta informação. Apague-o para poder fazer uma alteração neste registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            MessageBox.Show("O pagamento deste convênio deste mês e ano já foi informado", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-                            registros3.Close();
+                            registros.Close();
                             conexao.Close();
                         }
                         else
                         {
-                            registros3.Close();
+                            registros.Close();
 
-                            SqlCommand alterar = new SqlCommand("UPDATE tb_convenios_valores SET convenio = @convenio, convenio_valor_inicial = @valorInicial, convenio_valor_glosa = @glosa, convenio_valor_desconto = @desconto, convenio_valor_final = @valor, convenio_valor_mes = @mes, convenio_valor_ano = @ano WHERE convenio_valor_id = @id", conexao);
+                            SqlCommand pesquisar2 = new SqlCommand("SELECT convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores WHERE convenio_valor_id = @id;", conexao);
 
-                            alterar.Parameters.AddWithValue("@convenio", convenio.Convenio2);
-                            alterar.Parameters.AddWithValue("@valorInicial", convenio.ValorInicial);
-                            alterar.Parameters.AddWithValue("@glosa", convenio.Glosa);
-                            alterar.Parameters.AddWithValue("@desconto", convenio.Desconto);
-                            alterar.Parameters.AddWithValue("@valor", convenio.Valor);
-                            alterar.Parameters.AddWithValue("@mes", convenio.Mes);
-                            alterar.Parameters.AddWithValue("@ano", convenio.Ano);
-                            alterar.Parameters.AddWithValue("@id", convenio.Id);
+                            pesquisar2.Parameters.AddWithValue("@id", convenio.Id);
 
-                            alterar.ExecuteNonQuery();
+                            SqlDataReader registros2 = pesquisar2.ExecuteReader();
 
-                            conexao.Close();
+                            registros2.Read();
 
-                            MessageBox.Show("Inserção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            string mes = registros2["convenio_valor_mes"].ToString();
+                            string ano = registros2["convenio_valor_ano"].ToString();
 
-                            this.Close();
+                            registros2.Close();
+
+                            SqlCommand pesquisar3 = new SqlCommand("SELECT * FROM tb_saldos WHERE saldo_mes = @mes AND saldo_ano = @ano;", conexao);
+
+                            pesquisar3.Parameters.AddWithValue("@mes", mes);
+                            pesquisar3.Parameters.AddWithValue("@ano", ano);
+
+                            SqlDataReader registros3 = pesquisar3.ExecuteReader();
+
+                            if (registros3.HasRows)
+                            {
+                                MessageBox.Show("Um registro na tabela de saldos está fazendo uso desta informação. Apague-o para poder fazer uma alteração neste registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                                registros3.Close();
+                                conexao.Close();
+                            }
+                            else
+                            {
+                                registros3.Close();
+
+                                SqlCommand alterar = new SqlCommand("UPDATE tb_convenios_valores SET convenio = @convenio, convenio_valor_inicial = @valorInicial, convenio_valor_glosa = @glosa, convenio_valor_desconto = @desconto, convenio_valor_final = @valor, convenio_valor_mes = @mes, convenio_valor_ano = @ano WHERE convenio_valor_id = @id", conexao);
+
+                                alterar.Parameters.AddWithValue("@convenio", convenio.Convenio2);
+                                alterar.Parameters.AddWithValue("@valorInicial", convenio.ValorInicial);
+                                alterar.Parameters.AddWithValue("@glosa", convenio.Glosa);
+                                alterar.Parameters.AddWithValue("@desconto", convenio.Desconto);
+                                alterar.Parameters.AddWithValue("@valor", convenio.Valor);
+                                alterar.Parameters.AddWithValue("@mes", convenio.Mes);
+                                alterar.Parameters.AddWithValue("@ano", convenio.Ano);
+                                alterar.Parameters.AddWithValue("@id", convenio.Id);
+
+                                alterar.ExecuteNonQuery();
+
+                                conexao.Close();
+
+                                MessageBox.Show("Inserção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                this.Close();
+                            }
                         }
-
                     }
+                    catch (Exception erro)
+                    {
+                        MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                    }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }                   
                 }
             }
         }
@@ -325,11 +349,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Convenio convenio = new Convenio(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT convenio_valor_mes, convenio_valor_ano FROM tb_convenios_valores WHERE convenio_valor_id = @id;", conexao);
 
@@ -380,6 +406,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }

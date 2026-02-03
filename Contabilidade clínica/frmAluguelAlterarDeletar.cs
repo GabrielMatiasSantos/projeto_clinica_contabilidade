@@ -31,11 +31,13 @@ namespace Contabilidade_clínica
             cbAluguelMes.Text = mes;
             txtAluguelAno.Text = ano;
 
+            SqlConnection conexao = null;
+
             try
             {
                 PagamentosBruto pagamentos = new PagamentosBruto(cbAluguelMes.Text, txtAluguelAno.Text);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND membro_relacao_clinica = 'Não sócio' AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
 
@@ -63,7 +65,14 @@ namespace Contabilidade_clínica
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
+            }
+
             cbAluguelNome.Text = nome;
             cbAluguelPeriodo.Text = periodo;
             txtAluguelValor.Text = valor;
@@ -94,11 +103,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbAluguelMes.Text, txtAluguelAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND membro_relacao_clinica = 'Não sócio' AND NOT membro_funcao = 'Secretaria';", conexao);
 
@@ -125,6 +136,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }
@@ -204,11 +222,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         Aluguel aluguel = new Aluguel(Convert.ToInt32(cbAluguelNome.SelectedValue), cbAluguelPeriodo.Text, Convert.ToDecimal(txtAluguelValor.Text), cbAluguelMes.Text, txtAluguelAno.Text, Convert.ToInt32(txtId.Text));
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_aluguel WHERE aluguel_membro = @membro AND aluguel_mes = @mes AND aluguel_ano = @ano AND NOT aluguel_id = @id", conexao);
 
@@ -270,6 +290,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }                                  
             }
         }
@@ -280,11 +307,13 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     Aluguel aluguel = new Aluguel(Convert.ToInt32(txtId.Text));
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_pagamentos_nao_socios WHERE desconto_aluguel = @id;", conexao);
 
@@ -321,6 +350,13 @@ namespace Contabilidade_clínica
                 catch (Exception erro)
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
                 }
             }
         }

@@ -31,11 +31,13 @@ namespace Contabilidade_clínica
             cbCondominioMes.Text = mes;
             txtCondominioAno.Text = ano;
 
+            SqlConnection conexao = null;
+
             try
             {
                 PagamentosBruto pagamentos = new PagamentosBruto(cbCondominioMes.Text, txtCondominioAno.Text);
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                conexao = new SqlConnection(StringConexao.stringConexao);
 
                 SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT membro_funcao = 'Secretaria' ORDER BY membro_nome;", conexao);
 
@@ -57,6 +59,13 @@ namespace Contabilidade_clínica
             catch (Exception erro)
             {
                 MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                if (conexao != null && conexao.State != ConnectionState.Closed)
+                {
+                    conexao.Close();
+                }
             }
 
             cbCondominioNome.Text = membro;
@@ -95,11 +104,13 @@ namespace Contabilidade_clínica
             }
             else
             {
+                SqlConnection conexao = null;
+
                 try
                 {
                     PagamentosBruto pagamentos = new PagamentosBruto(cbCondominioMes.Text, txtCondominioAno.Text);
 
-                    SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                    conexao = new SqlConnection(StringConexao.stringConexao);
 
                     SqlCommand pesquisar = new SqlCommand("SELECT membro_id, membro_nome FROM tb_pagamentos_valor_bruto INNER JOIN tb_membros ON tb_pagamentos_valor_bruto.pagamento_bruto_membro = tb_membros.membro_id WHERE pagamento_bruto_mes = @mes AND pagamento_bruto_ano = @ano AND NOT membro_funcao = 'Secretaria';", conexao);
 
@@ -122,6 +133,13 @@ namespace Contabilidade_clínica
                 {
                     MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }
             }
         }
 
@@ -141,11 +159,13 @@ namespace Contabilidade_clínica
 
                 if (botao == DialogResult.Yes)
                 {
+                    SqlConnection conexao = null;
+
                     try
                     {
                         CondominioHoras condominio = new CondominioHoras(Convert.ToInt32(txtId.Text), Convert.ToInt32(cbCondominioNome.SelectedValue), Convert.ToInt32(txtCondominioHoras.Text), cbCondominioMes.Text, txtCondominioAno.Text);
 
-                        SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
+                        conexao = new SqlConnection(StringConexao.stringConexao);
 
                         SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_horas_trabalhadas WHERE horas_trabalhadas_membro = @membro AND horas_trabalhadas_mes = @mes AND horas_trabalhadas_ano = @ano AND NOT horas_trabalhadas_id = @id", conexao);
 
@@ -166,7 +186,7 @@ namespace Contabilidade_clínica
                             conexao.Close();
                        }
                        else
-                        {
+                       {
                             registros.Close();
 
                             SqlCommand pesquisar2 = new SqlCommand("SELECT * FROM tb_membros_condominio WHERE membro_horas_trabalhadas = @id;", conexao);
@@ -208,6 +228,13 @@ namespace Contabilidade_clínica
                     {
                         MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
+                    finally
+                    {
+                        if (conexao != null && conexao.State != ConnectionState.Closed)
+                        {
+                            conexao.Close();
+                        }
+                    }
                 }
             }
         }
@@ -234,41 +261,57 @@ namespace Contabilidade_clínica
 
             if (botao == DialogResult.Yes)
             {
-                CondominioHoras condominio = new CondominioHoras(Convert.ToInt32(txtId.Text));
+                SqlConnection conexao = null;
 
-                SqlConnection conexao = new SqlConnection(StringConexao.stringConexao);
-
-                SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_membros_condominio WHERE membro_horas_trabalhadas = @id;", conexao);
-
-                pesquisar.Parameters.AddWithValue("@id", condominio.Id);
-
-                conexao.Open();
-
-                SqlDataReader registros = pesquisar.ExecuteReader();
-
-                if (registros.HasRows)
+                try
                 {
-                    MessageBox.Show("Um registro na tabela de valores de condomínio dos membros da clínica está fazendo uso desta informação. Apague-o para remover este registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    CondominioHoras condominio = new CondominioHoras(Convert.ToInt32(txtId.Text));
 
-                    registros.Close();
-                    conexao.Close();
+                    conexao = new SqlConnection(StringConexao.stringConexao);
+
+                    SqlCommand pesquisar = new SqlCommand("SELECT * FROM tb_membros_condominio WHERE membro_horas_trabalhadas = @id;", conexao);
+
+                    pesquisar.Parameters.AddWithValue("@id", condominio.Id);
+
+                    conexao.Open();
+
+                    SqlDataReader registros = pesquisar.ExecuteReader();
+
+                    if (registros.HasRows)
+                    {
+                        MessageBox.Show("Um registro na tabela de valores de condomínio dos membros da clínica está fazendo uso desta informação. Apague-o para remover este registro", "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        registros.Close();
+                        conexao.Close();
+                    }
+                    else
+                    {
+                        registros.Close();
+
+                        SqlCommand deletar = new SqlCommand("DELETE FROM tb_horas_trabalhadas WHERE horas_trabalhadas_id = @id;", conexao);
+
+                        deletar.Parameters.AddWithValue("@id", condominio.Id);
+
+                        deletar.ExecuteNonQuery();
+
+                        conexao.Close();
+
+                        MessageBox.Show("Remoção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        this.Close();
+                    }
                 }
-                else
+                catch (Exception erro)
                 {
-                    registros.Close();
-
-                    SqlCommand deletar = new SqlCommand("DELETE FROM tb_horas_trabalhadas WHERE horas_trabalhadas_id = @id;", conexao);
-
-                    deletar.Parameters.AddWithValue("@id", condominio.Id);
-
-                    deletar.ExecuteNonQuery();
-
-                    conexao.Close();
-
-                    MessageBox.Show("Remoção feita com sucesso", "Operação bem sucedida", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    this.Close();
-                }                              
+                    MessageBox.Show(erro.Message, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    if (conexao != null && conexao.State != ConnectionState.Closed)
+                    {
+                        conexao.Close();
+                    }
+                }                             
             }
         }       
     }
