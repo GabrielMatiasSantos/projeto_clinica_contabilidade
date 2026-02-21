@@ -1,0 +1,102 @@
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe.config
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.pdb
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.AssemblyReference.cache
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmEntrada.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.Properties.Resources.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.GenerateResource.cache
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.CoreCompileInputs.cache
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.exe
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.pdb
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmContabilidade.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmMembrosAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmPagamentosBrutoAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmImpostoAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmCondominioGastos.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmCondominioHorasAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmEscritorio.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmConvenioAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmConvenioValoresAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe.manifest
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.application
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.exe.manifest
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.application
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\dbClinicaContabilidade.mdf
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\dbClinicaContabilidade_log.ldf
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe.config
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe.manifest
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.application
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.exe
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\bin\Debug\Contabilidade clínica.pdb
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.AssemblyReference.cache
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmEntrada.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmAluguelAlterar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmCondominioGastos.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmCondominioHorasAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmContabilidade.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmConvenioAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmConvenioValoresAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmEscritorio.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmImpostoAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmMembrosAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmPagamentosBrutoAlterarDeletar.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.Properties.Resources.resources
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.GenerateResource.cache
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.csproj.CoreCompileInputs.cache
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.exe.manifest
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.application
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.exe
+C:\Users\Gabriel\Downloads\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade clínica.pdb
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\BouncyCastle.Cryptography.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.barcodes.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.bouncy-castle-connector.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.commons.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.forms.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Logging.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Options.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Primitives.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Buffers.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Memory.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.ValueTuple.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\BouncyCastle.Cryptography.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.barcodes.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.bouncy-castle-connector.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.commons.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.io.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.kernel.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.layout.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.pdfa.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.pdfua.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.sign.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.styledxmlparser.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.svg.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Logging.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Options.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Microsoft.Extensions.Primitives.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Buffers.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Memory.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Numerics.Vectors.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.Threading.Tasks.Extensions.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\System.ValueTuple.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabil.599D2660.Up2Date
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\obj\Debug\Contabilidade_clínica.frmAluguelAlterarDeletar.resources
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.bouncy-castle-adapter.dll
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\itext.bouncy-castle-adapter.xml
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\dbClinicaContabilidade.mdf
+C:\Users\Gabriel\Desktop\Contabilidade clínica\Contabilidade clínica\bin\Debug\dbClinicaContabilidade_log.ldf
