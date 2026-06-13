@@ -157,7 +157,7 @@
 
 
 
-4.Refatorações planejadas no futuro
+4. Refatorações planejadas no futuro
 
 
       .Aplicar o padrão repositório e remover o código de dentro dos eventos []
